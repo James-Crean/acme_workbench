@@ -1,1 +1,7 @@
 node_modules
+
+*.pyc
+*.bundle.js
+*.bundle.js.map
+db.sqlite3
+/static/js/index.html
