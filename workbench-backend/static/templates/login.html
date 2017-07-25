@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %} login {% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" media="screen" title="no title" charset="utf-8">
+<link href="/static/css/form.css" rel="stylesheet">
+
+
+<form id="login_form" action="login" method="post" class="form-signin">
+  <h2 class="form-signin-heading">Please Sign In</h2>
+  {% csrf_token %}
+  <label for="username" class="sr-only">User name:</label>
+  <input type="text" name="username" value="" id="username" class="form-control" placeholder="User Name">
+
+  <label for="password" class="sr-only">Password:</label>
+  <input type="password" name="password" value="" id="password" class="form-control" placeholder="Password">
+
+  <button class="btn btn-lg btn-primary btn-block" id="sign-in" type="submit">Sign In</button>
+  <input type="hidden" name="next" value="{{ next }}" />
+  <br/>
+  <a href="register" class="btn btn-lg btn-info btn-block" >New User Registration.</a>
+</form>
+<br>
+{% endblock %}
+
+{% block footer %}
+  <footer class="page-footer blue-grey darken-4" style="padding-bottom: 1.5vh; padding-top: 2vh; margin-top: 0px; bottom: 0px; position: fixed; width: 100%;">
+    <a class="valign" style="color: #64b5f6; margin-left: 2vw;" href="#">Privacy &amp; Legal Notice</a> &nbsp;
+    <a style="color: #64b5f6; margin-left: 2vw;" href="https://github.com/ACME-OUI/acme-web-fe/issues">Site Issues</a>
+  </footer>
+{% endblock %}

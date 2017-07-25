@@ -1,11 +1,20 @@
-from django.shortcuts import render
+from django.shortcuts import render, render_to_response
+from django.template import RequestContext, loader
+from django.http import HttpResponse, HttpResponseRedirect
+from django.contrib import messages
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.models import Group
+from index.forms import UserCreationForm
+from index.models import Notification
+from django.views.decorators.csrf import csrf_protect
+
 
 # Create your views here.
 def index(request):
     return render(request, 'index.html')
 
 # Login
-@csrf_exempt
+@csrf_protect
 def user_login(request):
     context = RequestContext(request)
 
@@ -17,7 +26,7 @@ def user_login(request):
                 login(request, user)
                 messages.success(
                     request, 'User: ' + request.POST['username'] + ' successfully loged in')
-                return HttpResponseRedirect('/acme')
+                return HttpResponseRedirect('/')
             else:
                 messages.error(
                     request, 'User: ' + request.POST['username'] + ' is a disactivated account')
@@ -31,19 +40,17 @@ def user_login(request):
 
         else:
             redirect = ''
-        response = HttpResponse(
-            render_template(request, "web_fe/login.html", {"next": redirect}))
-        return response
+        return render(request, "login.html", {"next": redirect})
+        
 
 # Logout
 def user_logout(request):
     logout(request)
     messages.success(request, 'Log out successful')
-    return HttpResponse(render_template(request, "web_fe/home.html", {'logout': 'success    '}))
+    return render(request, "index.html", {'logout': 'success    '})
 
 # Register new user
-@csrf_exempt
-def register(request):
+def user_register(request):
     context = RequestContext(request)
     registered = False
     if request.method == 'POST':
@@ -66,7 +73,7 @@ def register(request):
                 login(request, user)
                 message = 'User: {} created an account and logged in'.format(username)
                 messages.success(request, message)
-                setup_output_directories(username)
+                #setup_output_directories(username)
                 note = Notification(user=str(request.user), notification_list='')
                 try:
                     note.save()
@@ -81,4 +88,12 @@ def register(request):
         "user_form": user_form,
         "registered": registered
     }
-    return render_to_response("web_fe/register.html", data, context)
+    return render(request, "register.html", data)
+
+
+
+#Helper Functions
+def render_template(request, template, context):
+    template = loader.get_template(template)
+    context = RequestContext(request, context)
+    return template.render(context)

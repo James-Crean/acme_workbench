@@ -4,4 +4,6 @@ node_modules
 *.bundle.js
 *.bundle.js.map
 db.sqlite3
+.vscode
 /static/js/index.html
+workbench-backend/index/migrations/
