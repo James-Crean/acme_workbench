@@ -20,5 +20,8 @@ from index import views as index_views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^$', index_views.index),
+    url(r'^$', index_views.index, name='index'),
+    url(r'^login/?$', index_views.user_login, name='login'),
+    url(r'^logout/?$', index_views.user_logout, name='logout'),
+    url(r'^register/?$', index_views.user_register, name='register'),
 ]
