@@ -7,6 +7,7 @@ from django.contrib.auth.models import Group
 from index.forms import UserCreationForm
 from index.models import Notification
 from django.views.decorators.csrf import csrf_protect
+from django.core.exceptions import ObjectDoesNotExist
 
 
 # Create your views here.
@@ -16,42 +17,52 @@ def index(request):
 # Login
 @csrf_protect
 def user_login(request):
+    """
+    Handle user login
+    """
     context = RequestContext(request)
 
     if request.method == 'POST':
         user = authenticate(
-            username=request.POST['username'], password=request.POST['password'])
-        if user:
-            if user.is_active:
-                login(request, user)
-                messages.success(
-                    request, 'User: ' + request.POST['username'] + ' successfully loged in')
-                return HttpResponseRedirect('/')
-            else:
-                messages.error(
-                    request, 'User: ' + request.POST['username'] + ' is a disactivated account')
-                return HttpResponseRedirect('login')
-        else:
+            username=request.POST['username'],
+            password=request.POST['password'])
+        if not user:
             messages.error(request, "Username or password incorrect")
-            return HttpResponseRedirect('login')
+            return render(request, 'login.html', status=401)
+
+        if user.is_active:
+            login(request, user)
+            msg = 'User: {user} successfully loged in'.format(
+                user=request.POST['username'])
+            messages.success(request, msg)
+            return render(request, 'index.html')
+        else:
+            msg = 'User: {user} is a deactivated account'.format(
+                user=request.POST['username'])
+            messages.success(request, msg)
+            return render(request, 'login.html', status=401)
+
     else:
         if 'next' in request.GET:
             redirect = request.GET.get('next')
-
         else:
             redirect = ''
         return render(request, "login.html", {"next": redirect})
-        
 
 # Logout
 def user_logout(request):
+    """
+    Handle user logout
+    """
     logout(request)
     messages.success(request, 'Log out successful')
-    return render(request, "index.html", {'logout': 'success    '})
+    return render(request, "index.html", {'logout': 'success'})
 
 # Register new user
 def user_register(request):
-    context = RequestContext(request)
+    """
+    Handle user registration
+    """
     registered = False
     if request.method == 'POST':
         user_form = UserCreationForm(data=request.POST)
@@ -61,26 +72,32 @@ def user_register(request):
             try:
                 group = Group.objects.get(name="Default")
                 user.groups.add(group)
-            except Group.DoesNotExist:
-                # Don't do anything, no default set up
-                pass
+            except ObjectDoesNotExist as dne:
+                group = Group(name="Default")
+                group.save()
+
+                group = Group.objects.get(name="Default")
+                user.groups.add(group)
 
             user.save()
             registered = True
             user = authenticate(
-                username=request.POST['username'], password=request.POST['password1'])
+                username=request.POST['username'],
+                password=request.POST['password1'])
             if user:
                 login(request, user)
-                message = 'User: {} created an account and logged in'.format(username)
+                message = 'User: {user} created an account and logged in'.format(
+                    user=username)
                 messages.success(request, message)
-                #setup_output_directories(username)
-                note = Notification(user=str(request.user), notification_list='')
+                note = Notification(
+                    user=str(request.user),
+                    notification_list='')
                 try:
                     note.save()
                 except Exception, e:
                     raise
         else:
-            print user_form.errors
+            return render(request, "register.html", {'error': user_form.errors}, status=422)
     else:
         user_form = UserCreationForm()
 
@@ -89,11 +106,3 @@ def user_register(request):
         "registered": registered
     }
     return render(request, "register.html", data)
-
-
-
-#Helper Functions
-def render_template(request, template, context):
-    template = loader.get_template(template)
-    context = RequestContext(request, context)
-    return template.render(context)
