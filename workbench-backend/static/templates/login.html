@@ -2,7 +2,6 @@
 {% block title %} login {% endblock %}
 
 {% block content %}
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" media="screen" title="no title" charset="utf-8">
 <link href="/static/css/form.css" rel="stylesheet">
 
 
@@ -18,14 +17,13 @@
   <button class="btn btn-lg btn-primary btn-block" id="sign-in" type="submit">Sign In</button>
   <input type="hidden" name="next" value="{{ next }}" />
   <br/>
-  <a href="register" class="btn btn-lg btn-info btn-block" >New User Registration.</a>
+  <button class="btn btn-lg btn-primary btn-block"><a href="register" style="color: white">New User Registration.</a></button>
 </form>
 <br>
 {% endblock %}
 
 {% block footer %}
-  <footer class="page-footer blue-grey darken-4" style="padding-bottom: 1.5vh; padding-top: 2vh; margin-top: 0px; bottom: 0px; position: fixed; width: 100%;">
-    <a class="valign" style="color: #64b5f6; margin-left: 2vw;" href="#">Privacy &amp; Legal Notice</a> &nbsp;
-    <a style="color: #64b5f6; margin-left: 2vw;" href="https://github.com/ACME-OUI/acme-web-fe/issues">Site Issues</a>
-  </footer>
+    <footer class="page-footer blue-grey darken-4" style="padding-bottom: 1.5vh; padding-top: 2vh; margin-top: 0px; bottom: 0px; position: fixed; width: 100%;">
+      <a class="valign" style="color: #64b5f6; margin-left: 2vw;" href="/privacy_policy">Privacy &amp; Legal Notice</a> &nbsp;
+    </footer>
 {% endblock %}

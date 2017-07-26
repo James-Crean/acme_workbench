@@ -10,9 +10,11 @@ from django.views.decorators.csrf import csrf_protect
 from django.core.exceptions import ObjectDoesNotExist
 
 
-# Create your views here.
 def index(request):
     return render(request, 'index.html')
+
+def workbench(request):
+    return render(request, 'workbench.html')
 
 # Login
 @csrf_protect

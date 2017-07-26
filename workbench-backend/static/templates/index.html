@@ -1,1 +1,18 @@
-<h1>Working!</h1>
+{% extends "base.html" %}
+{% block content %}
+    <div class="jumbotron">
+        <h1>ACME Workbench</h1>
+        <p class="lead">
+            The ACME Workbench is currently under development. Please report any issues to the <a href="https://github.com/sterlingbaldwin/acme_workbench/issues">github issues page.</a>
+        </p>
+
+        <p><a class="btn wave-effect" href="/workbench" role="button">workbench</a></p>
+
+    </div>
+{% endblock %}
+
+{% block footer %}
+    <footer class="page-footer blue-grey darken-4" style="padding-bottom: 1.5vh; padding-top: 2vh; margin-top: 0px; bottom: 0px; position: fixed; width: 100%;">
+        <a class="valign" style="color: #64b5f6; margin-left: 2vw;" href="/privacy_policy">Privacy &amp; Legal Notice</a> &nbsp;
+    </footer>
+{% endblock %}
