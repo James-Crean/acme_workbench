@@ -14,6 +14,14 @@ class IndexViewTests(TestCase):
         response = client.get('/')
         self.assertEqual(response.status_code, 200)
     
+    def test_get_workbench(self):
+        """
+        Test that the workbench page returns success
+        """
+        client = Client()
+        response = client.get('/workbench')
+        self.assertEqual(response.status_code, 200)
+    
     def test_valid_user_registration(self):
         """
         test ability to register new users
