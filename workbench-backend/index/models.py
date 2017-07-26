@@ -39,6 +39,6 @@ class DataFile(BaseModel):
     """
     path = models.CharField(max_length=255)
     display_name = models.CharField(max_length=255)
-    owner = models.ForeignKey('User')
+    owner = models.ForeignKey(User)
     allowed_access = models.ManyToManyField(User)
     data_type = models.IntegerField(DataType)
