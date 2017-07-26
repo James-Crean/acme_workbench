@@ -18,7 +18,7 @@ install:
   - hash -r
   - conda config --set always_yes yes --set changeps1 no
   - conda update -q conda
-  - conda env create -n workbench --file env.yml
+  - conda env create --file env.yml
   - source activate workbench
 #  - npm install workbench-frontend/package.json
 
