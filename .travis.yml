@@ -12,8 +12,15 @@ before_install:
   - export PIP_USE_MIRRORS=true
 
 install:
-  - pip install -r requirements
-  - npm install workbench-frontend/package.json
+  - wget https://repo.continuum.io/miniconda/Miniconda2-latest-Linux-x86_64.sh -O miniconda.sh;
+  - bash minicoda.sh -b -p $HOME/miniconda
+  - export PATH="$HOME/miniconda/bin:$PATH"
+  - hash -r
+  - conda config --set alywas_yes yes --set changeps1 no
+  - conda undate -q conda
+  - conda env create --file env.yml
+  - source activate workbench
+#  - npm install workbench-frontend/package.json
 
 script:
   - python workbench-backend/manage.py test
