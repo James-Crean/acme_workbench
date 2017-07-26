@@ -1,5 +1,18 @@
-{% extends "base.html" %} 
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block extra_headers %}
+    <script rel="stylesheet" href=href="{% static "js/polyfills.bundle.js" %}"></script>
+    <script rel="stylesheet" href=href="{% static "js/polyfills.bundle.js.map" %}"></script>
+    <script rel="stylesheet" href=href="{% static "js/inline.bundle.js" %}"></script>
+    <script rel="stylesheet" href=href="{% static "js/inline.bundle.js.map" %}"></script>
+    <script rel="stylesheet" href=href="{% static "js/main.bundle.js" %}"></script>
+    <script rel="stylesheet" href=href="{% static "js/main.bundle.js.map" %}"></script>
+    <script rel="stylesheet" href=href="{% static "js/styles.bundle.js" %}"></script>
+    <script rel="stylesheet" href=href="{% static "js/styles.bundle.js.map" %}"></script>
+    <script rel="stylesheet" href=href="{% static "js/vendor.bundle.js" %}"></script>
+    <script rel="stylesheet" href=href="{% static "js/vendor.bundle.js.map" %}"></script>
+{% endblock %}
 {% block title %} ACME Workbench {% endblock %}
 {% block content %}
-    
+    <workbench></workbench>
 {% endblock%}
