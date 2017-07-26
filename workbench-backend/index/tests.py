@@ -163,3 +163,6 @@ class IndexViewTests(TestCase):
         res = client.get('/logout')
         self.assertEqual(res.status_code, 200)
         self.assertFalse(res.context['request'].user.is_authenticated())
+    
+    def test_is_truthy(self):
+        self.assertTrue(True)
