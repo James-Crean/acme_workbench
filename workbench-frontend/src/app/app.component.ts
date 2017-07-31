@@ -6,5 +6,10 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'app';
+  active_component: string;
+  title = 'workbench';
+
+  change_active($event){
+    this.active_component = $event.srcElement.id;
+  }
 }
