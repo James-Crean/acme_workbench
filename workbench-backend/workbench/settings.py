@@ -31,6 +31,9 @@ APPEND_SLASH = True
 
 # Application definition
 
+STATICFILES_DIRS = ("static",)
+
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
