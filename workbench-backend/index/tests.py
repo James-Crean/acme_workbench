@@ -14,13 +14,36 @@ class IndexViewTests(TestCase):
         response = client.get('/')
         self.assertEqual(response.status_code, 200)
     
-    def test_get_workbench(self):
+    def test_get_workbench_no_login(self):
         """
-        Test that the workbench page returns success
+        Test that the workbench redirects when not logged in
         """
         client = Client()
-        response = client.get('workbench')
-        self.assertEqual(response.status_code, 200)
+        response = client.get('/workbench')
+        self.assertEqual(response.status_code, 302)
+    
+    def test_get_workbench_with_login(self):
+        """
+        Test that the workbench renders when logged in
+        """
+        client = Client()
+        post_data = {
+            'username': 'test_user',
+            'password1': 'test_pass',
+            'password2': 'test_pass',
+            'firstname': 'first',
+            'lastname': 'last',
+            'email': 'test@email.com'
+        }
+        res = client.post('/register', post_data)
+        self.assertEqual(res.status_code, 200)
+
+        self.assertTrue(
+            client.login(
+                username='test_user',
+                password='test_pass'))
+        res = client.get('/workbench')
+        self.assertEqual(res.status_code, 200)
     
     def test_valid_user_registration(self):
         """

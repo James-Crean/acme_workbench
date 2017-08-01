@@ -1,0 +1,12 @@
+<div class="w3-sidebar w3-bar-block blue-grey darken-2" style="width: 15em; z-index: 1;"> 
+  <a *ngFor="let element of elements"  
+     href="#" 
+     class="w3-bar-item">
+    <p class="waves-effect waves-light btn  teal darken-1"
+       id="sidebar-{{element.id}}" 
+       style="width: 100%; text-align: left; padding-left: 15px;"
+       (click)="change_active($event)"> 
+      {{ element.display }} 
+    </p>
+  </a>
+</div>

@@ -1,4 +1,4 @@
-from django.shortcuts import render, render_to_response
+from django.shortcuts import render, redirect
 from django.template import RequestContext, loader
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib import messages
@@ -14,7 +14,10 @@ def index(request):
     return render(request, 'index.html')
 
 def workbench(request):
-    return render(request, 'workbench.html')
+    if request.user.is_authenticated():
+        return render(request, 'workbench.html')
+    else:
+        return redirect('login/', status=302)
 
 # Login
 @csrf_protect

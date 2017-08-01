@@ -24,5 +24,5 @@ urlpatterns = [
     url(r'^login/?$', index_views.user_login, name='login'),
     url(r'^logout/?$', index_views.user_logout, name='logout'),
     url(r'^register/?$', index_views.user_register, name='register'),
-    url(r'^workbench/$', index_views.workbench, name='workbench')
+    url(r'^workbench/?$', index_views.workbench, name='workbench')
 ]

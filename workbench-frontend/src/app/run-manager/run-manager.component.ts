@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-run-manager',
+  selector: 'run-manager',
   templateUrl: './run-manager.component.html',
   styleUrls: ['./run-manager.component.css']
 })

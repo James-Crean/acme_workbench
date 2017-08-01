@@ -27,8 +27,12 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
+APPEND_SLASH = True
 
 # Application definition
+
+STATICFILES_DIRS = ("static",)
+
 
 INSTALLED_APPS = [
     'django.contrib.admin',

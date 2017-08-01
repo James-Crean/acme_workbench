@@ -1,5 +1,17 @@
-{% extends "base.html" %} 
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block extra_headers %}
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+{% endblock %}
 {% block title %} ACME Workbench {% endblock %}
 {% block content %}
-    
-{% endblock%}
+    <app-root class="left-align"></app-root>
+    <script type="text/javascript" src="/static/js/inline.bundle.js"></script>
+    <script type="text/javascript" src="/static/js/polyfills.bundle.js"></script>
+    <script type="text/javascript" src="/static/js/styles.bundle.js"></script>
+    <script type="text/javascript" src="/static/js/vendor.bundle.js"></script>
+    <script type="text/javascript" src="/static/js/main.bundle.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.1/js/materialize.min.js"></script>
+{% endblock %}
+
