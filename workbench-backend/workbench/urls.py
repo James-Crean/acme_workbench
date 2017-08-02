@@ -17,6 +17,7 @@ from django.conf.urls import url
 from django.contrib import admin
 
 from index import views as index_views
+from file_manager import views as file_manager_views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -24,5 +25,8 @@ urlpatterns = [
     url(r'^login/?$', index_views.user_login, name='login'),
     url(r'^logout/?$', index_views.user_logout, name='logout'),
     url(r'^register/?$', index_views.user_register, name='register'),
-    url(r'^workbench/?$', index_views.workbench, name='workbench')
+    url(r'^workbench/?$', index_views.workbench, name='workbench'),
+    url(r'^file_manager/get_data_set_list/?$', file_manager_views.get_data_set_list, name='getDataSetList'),
+    url(r'^file_manager/get_data_set/?$', file_manager_views.get_data_set, name='getDataSet'),
+    url(r'^file_manager/get_file_info/?$', file_manager_views.get_file_info, name='getFileInfo')
 ]
