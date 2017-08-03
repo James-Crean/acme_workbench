@@ -8,6 +8,7 @@ import { RunManagerComponent } from './run-manager/run-manager.component';
 import { NotificationManagerComponent } from './notification-manager/notification-manager.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { SettingsComponent } from './settings/settings.component';
+import { DatasetCollectionComponent } from './dataset-collection/dataset-collection.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { SettingsComponent } from './settings/settings.component';
     RunManagerComponent,
     NotificationManagerComponent,
     SidebarComponent,
-    SettingsComponent
+    SettingsComponent,
+    DatasetCollectionComponent
   ],
   imports: [
     BrowserModule

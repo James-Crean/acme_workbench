@@ -10,6 +10,6 @@ export class AppComponent {
   title = 'workbench';
 
   change_active($event){
-    this.active_component = $event.srcElement.id;
+    this.active_component = $event.target.id;
   }
 }
