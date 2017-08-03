@@ -7,3 +7,4 @@ db.sqlite3
 .vscode
 /static/js/index.html
 workbench-backend/index/migrations/
+workbench-backend/local_settings.py

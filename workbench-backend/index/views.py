@@ -5,7 +5,6 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import Group
 from index.forms import UserCreationForm
-from index.models import Notification
 from django.views.decorators.csrf import csrf_protect
 from django.core.exceptions import ObjectDoesNotExist
 
@@ -94,13 +93,6 @@ def user_register(request):
                 message = 'User: {user} created an account and logged in'.format(
                     user=username)
                 messages.success(request, message)
-                note = Notification(
-                    user=str(request.user),
-                    notification_list='')
-                try:
-                    note.save()
-                except Exception, e:
-                    raise
         else:
             return render(request, "register.html", {'error': user_form.errors}, status=422)
     else:
