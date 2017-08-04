@@ -13,7 +13,12 @@ class FileManagerViewTests(TestCase):
         """
         Test '/file_manager/get_data_set_list/'
         """
-        expected_result = ['dummy set']
+        expected_result = [{
+            "file_list": ["dummy_1", "dummy_2"],
+            "allowed_access": ["test_user"],
+            "name": "dummy set",
+            "metadata": "This is a dummy data set"
+        }]
         client = Client()
         client.login(
             username='test_user',

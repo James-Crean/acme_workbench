@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { HttpModule, JsonpModule } from '@angular/http';
 
 import { MaterializeModule } from "angular2-materialize";
 
@@ -27,7 +28,8 @@ import { DatasetViewComponent } from './dataset-view/dataset-view.component';
   ],
   imports: [
     BrowserModule,
-    MaterializeModule
+    MaterializeModule,
+    HttpModule
   ],
   providers: [],
   bootstrap: [AppComponent]
