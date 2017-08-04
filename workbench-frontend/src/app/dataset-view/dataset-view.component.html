@@ -27,10 +27,30 @@
             </li>
             <li class="collection-item teal-text darken-1" style="padding-left: 2em">
               access: <span *ngFor="let j of fileInfoList[i].allowed_access"> {{ j }} </span>
+              <a (click)="openModal()" class="waves-effect waves-light btn btn-small modal-trigger"><i class="material-icons">add</i></a>
             </li>
           </ul>
         </div>
       </li>
     </ul>
+  </div>
+</div>
+
+
+<!-- Modal Content -->
+<div id="modal1" class="modal modal-fixed-footer" materialize="modal" [materializeParams]="[{dismissible: false}]" [materializeActions]="modalActions">
+  <div class="modal-content flex-me">
+    <div class="card grey lighten-4">
+      <div class="card-content teal-text text-darken-1">
+        <span class="card-title">Change Permissions</span>
+        
+        <select materialize="material_select" [materializeSelectOptions]="user_list">
+          <option *ngFor="let user of user_list" [value]="user.id">{{user.name}}</option>
+        </select>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <a class="modal-action modal-close waves-effect waves-green btn">Close</a>
   </div>
 </div>

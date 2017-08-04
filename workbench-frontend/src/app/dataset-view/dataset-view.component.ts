@@ -1,4 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { MaterializeAction } from 'angular2-materialize';
+
 import { FileService } from '../file.service'
 import { DataFile } from '../data-file'
 
@@ -13,6 +15,16 @@ export class DatasetViewComponent implements OnInit {
   file_list: Object[];
   fileInfoList: DataFile[];
   errorMessage: string;
+  modalActions = new EventEmitter<string|MaterializeAction>();
+
+  user_list: Object[] = [
+    {id: 1, name: "John"},
+    {id: 2, name: "Bob"},
+    {id: 3, name: "Joe"},
+    {id: 4, name: "Johnny"},
+    {id: 5, name: "Jim"}
+  ]
+
   @Input() dataset: any;
   @Output() showDatasetCollection: EventEmitter<string> = new EventEmitter<string>();
 
@@ -46,4 +58,12 @@ export class DatasetViewComponent implements OnInit {
   go_back(){
     this.showDatasetCollection.emit();
   }
+
+  openModal() {
+    this.modalActions.emit({action:"modal",params:['open']});
+  }
+  closeModal() {
+    this.modalActions.emit({action:"modal",params:['close']});
+  }
+
 }
