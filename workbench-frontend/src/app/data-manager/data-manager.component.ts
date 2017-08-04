@@ -7,9 +7,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DataManagerComponent implements OnInit {
 
+  active_component: string = "dataset-collection";
   constructor() { }
 
   ngOnInit() {
   }
-
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'dataset-collection',
@@ -8,6 +8,7 @@ import { Component, OnInit } from '@angular/core';
 export class DatasetCollectionComponent implements OnInit {
 
   datasets:Object[];
+
   constructor() { }
 
   ngOnInit() {
@@ -19,6 +20,10 @@ export class DatasetCollectionComponent implements OnInit {
       { filename: "casescript5-example.nc" },
       { filename: "casescript6-example.nc" }
     ]
+  }
+
+  pick_file($event){
+      
   }
 
 }
