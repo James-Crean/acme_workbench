@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { HttpModule, JsonpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
 import { DataManagerComponent } from './data-manager/data-manager.component';
@@ -24,7 +25,8 @@ import { DatasetViewComponent } from './dataset-view/dataset-view.component';
     DatasetViewComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    HttpModule
   ],
   providers: [],
   bootstrap: [AppComponent]

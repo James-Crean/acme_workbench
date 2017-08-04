@@ -1,25 +1,30 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { FileService } from '../file.service'
+import { DataSet } from '../data-set'
 
 @Component({
   selector: 'dataset-collection',
   templateUrl: './dataset-collection.component.html',
-  styleUrls: ['./dataset-collection.component.css']
+  styleUrls: ['./dataset-collection.component.css'],
+  providers: [FileService]  
 })
 export class DatasetCollectionComponent implements OnInit {
 
-  datasets:Object[];
+  datasets: any[];
+  errorMessage: string;
 
-  constructor() { }
+  constructor(private fileService: FileService) { }
 
   ngOnInit() {
-    this.datasets = [
-      { filename: "casescript1-example.nc" },
-      { filename: "casescript2-example.nc" },
-      { filename: "casescript3-example.nc" },
-      { filename: "casescript4-example.nc" },
-      { filename: "casescript5-example.nc" },
-      { filename: "casescript6-example.nc" }
-    ]
+    this.fileService.getDataSetList()
+      .subscribe(
+        files => {
+          this.datasets = files;
+        },
+        error => {
+          this.errorMessage = <any>error;
+        }
+      );
   }
 
   @Output()
