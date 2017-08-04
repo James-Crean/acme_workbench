@@ -19,7 +19,7 @@ def get_data_set_list(request):
         return HttpResponse(status=401)
 
     site_user = User.objects.get(username=user.username)
-    data_sets = [data_set.toDict()['name'] for data_set in DataSet.objects.filter(allowed_access=site_user.id)]
+    data_sets = [{k: v for k,v in data_set.toDict().items()} for data_set in DataSet.objects.filter(allowed_access=site_user.id)]
     response = json.dumps(data_sets)
     return HttpResponse(response)
 
@@ -71,3 +71,22 @@ def get_file_info(request):
 
     response = json.dumps(data_file.toDict())
     return HttpResponse(response)
+
+def get_node_list(request):
+    """
+    Return a list of known ESGF nodes
+    """
+    known_nodes = [
+        'pcmdi.llnl.gov',
+        'esgf-node.jpl.nasa.gov',
+        'esgf-index1.ceda.ac.uk',
+        'esgf-data.dkrz.de',
+        'esg-dn1.nsc.liu.se',
+        'esgf-node.ipsl.upmc.fr',
+        'esgf.nci.org.au'
+        'esg-dn1.nsc.liu.se',
+        'esgdata.gfdl.noaa.gov',
+        'esgf.nccs.nasa.gov',
+        'esg.ccs.ornl.gov'
+    ]
+    return HttpResponse(json.dumps(known_nodes))
