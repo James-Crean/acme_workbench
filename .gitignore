@@ -8,3 +8,4 @@ db.sqlite3
 /static/js/index.html
 workbench-backend/index/migrations/
 workbench-backend/local_settings.py
+workbench-frontend/package-lock.json

@@ -7,6 +7,7 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 })
 export class DatasetCollectionComponent implements OnInit {
 
+  //Stores the list of datasets available to the user.
   datasets:Object[];
 
   constructor() { }

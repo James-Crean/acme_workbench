@@ -7,27 +7,20 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DataManagerComponent implements OnInit {
 
-  active_component: string = "dataset-collection";
+  readonly COLLECTION: string = 'dataset-collection';
+  readonly VIEW: string = "dataset-view";
+
+  //Variable to switch between the dataset-collection and dataset-view components
+  //Values: 'dataset-collection', 'dataset-view'
+  active_component: string = this.COLLECTION;
+  dataset_name: string
   constructor() { }
 
   ngOnInit() {
   }
 
   view_dataset($event){
-    console.log("woot");
-    console.log($event);
-    var filename = $event.target.innerText;
-    console.log(filename);
+    this.active_component = this.VIEW;
+    this.dataset_name = $event.target.innerText;
   }
-
-  // test(){
-  //   if(this.active_component == "dataset-collection"){
-  //     this.active_component = "dataset-view";
-  //   }
-  //   else {
-  //     this.active_component = "dataset-collection";
-  //   }
-  //   console.log("testing");
-  //   console.log(this.active_component);
-  // }
 }

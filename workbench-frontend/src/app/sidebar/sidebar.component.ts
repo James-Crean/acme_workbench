@@ -7,8 +7,9 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 })
 export class SidebarComponent implements OnInit {
 
-  elements: any;
+  elements: any;  
   active_element: string;
+//------------------------------------------------------------------------------------
   constructor() { }
 
   ngOnInit() {
