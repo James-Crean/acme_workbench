@@ -17,7 +17,7 @@ export class FileService {
 
   constructor(private http: Http) { }
 
-  getDataSetList(): Observable<string[]>{
+  getDataSetList(): Observable<any[]>{
     return this.http.get(this.getDataSetListUrl)
       .map(this.extractData)
       .catch(this.handleError);

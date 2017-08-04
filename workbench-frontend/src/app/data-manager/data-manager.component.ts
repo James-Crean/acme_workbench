@@ -26,7 +26,16 @@ export class DataManagerComponent implements OnInit {
     this.fileService.getDataSetList()
     .subscribe(
       files => {
-        this.datasets = files;
+        this.datasets = [];
+        for(let item of files){
+          this.datasets.push(new DataSet({
+            name: <string>item.name,
+            metadata: <string[]>item.metadata,
+            file_list: <string[]>item.file_list,
+            allowed_access: <string[]>item.allowed_access
+          }));
+        } 
+        console.log(this.datasets);
       },
       error => {
         this.errorMessage = <any>error;

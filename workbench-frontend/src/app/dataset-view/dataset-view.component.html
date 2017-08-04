@@ -5,11 +5,27 @@
       {{ dataset.name }}
     </span>
     <ul materialize="collapsible" class="collapsible" data-collapsible="accordian">
-      <li *ngFor="let filename of dataset.file_list">
-        <div class="collapsible-header">
+      <li *ngFor="let filename of dataset.file_list; let i = index">
+        <div class="collapsible-header"
+          (click)="getFileInfo(i)">
           {{ filename }}
         </div>
-        <div class="collapsible-body">Stuff goes here</div>
+        <div class="collapsible-body">
+          <ul class="collection" *ngIf="fileInfoList[i]">
+            <li class="collection-item teal-text darken-1" style="padding-left: 2em">
+              path: {{ fileInfoList[i].path }}
+            </li>
+            <li class="collection-item teal-text darken-1" style="padding-left: 2em">
+              name: {{ fileInfoList[i].display_name }}
+            </li>
+            <li class="collection-item teal-text darken-1" style="padding-left: 2em">
+              owner: {{ fileInfoList[i].owner }}
+            </li>
+            <li class="collection-item teal-text darken-1" style="padding-left: 2em">
+              access: <span *ngFor="let j of fileInfoList[i].allowed_access"> {{ j }} </span>
+            </li>
+          </ul>
+        </div>
       </li>
     </ul>
   </div>
