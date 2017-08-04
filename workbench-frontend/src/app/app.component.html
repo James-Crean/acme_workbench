@@ -1,5 +1,5 @@
 <workbench-sidebar class="" (change)="change_active($event)"></workbench-sidebar>
-<div style="margin-left: 15em; display: inline-block;" id="workbench-content">
+<div style="margin-left: 15em;" id="workbench-content">
   <run-manager *ngIf="active_component == 'sidebar-RunManager'"></run-manager>
   <data-manager *ngIf="active_component == 'sidebar-DataManager'"></data-manager>
   <vis-manager *ngIf="active_component == 'sidebar-Visualizations'"></vis-manager>
