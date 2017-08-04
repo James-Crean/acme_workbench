@@ -3,4 +3,8 @@ export class DataSet {
     metadata: string[];
     allowed_access: string[];
     file_list: string[];
+
+    public constructor(init: any) {
+        Object.assign(this, init);
+    }
 }
