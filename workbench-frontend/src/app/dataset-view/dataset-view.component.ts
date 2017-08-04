@@ -1,29 +1,19 @@
 import { Component, OnInit, Input } from '@angular/core';
-
+import { FileService } from '../file.service'
 
 @Component({
   selector: 'dataset-view',
   templateUrl: './dataset-view.component.html',
-  styleUrls: ['./dataset-view.component.css']
+  styleUrls: ['./dataset-view.component.css'],
+  providers: [FileService]  
 })
 export class DatasetViewComponent implements OnInit {
 
   file_list: Object[];
-  constructor() { }
-
-  ngOnInit() {
-    this.file_list = [
-      {name: "file1"},
-      {name: "file2"},
-      {name: "file3"},
-      {name: "file4"},
-      {name: "file5"},
-      {name: "file6"},
-    ];
-
-    //$('.collapsible').collapsible();
-        
-  }
-
   @Input() datasetName: string;
+  @Input() dataset: any;
+
+  constructor(private fileService: FileService) { }
+
+  ngOnInit() { }
 }

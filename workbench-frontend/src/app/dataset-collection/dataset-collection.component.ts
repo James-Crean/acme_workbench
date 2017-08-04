@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, Input, EventEmitter } from '@angular/core';
 import { FileService } from '../file.service'
 import { DataSet } from '../data-set'
 
@@ -11,27 +11,16 @@ import { DataSet } from '../data-set'
 export class DatasetCollectionComponent implements OnInit {
 
   //Stores the list of datasets available to the user.
-  datasets: any[];
   errorMessage: string;
-
-  constructor(private fileService: FileService) { }
-
-  ngOnInit() {
-    this.fileService.getDataSetList()
-      .subscribe(
-        files => {
-          this.datasets = files;
-        },
-        error => {
-          this.errorMessage = <any>error;
-        }
-      );
-  }
-
+  @Input() datasets;
   @Output()
   viewDataset: EventEmitter<string> = new EventEmitter<string>();
 
-  pick_dataset($event){
-      this.viewDataset.emit($event);
+  constructor(private fileService: FileService) { }
+
+  ngOnInit() {}
+
+  pick_dataset($event, i){
+    this.viewDataset.emit(i);
   }
 }

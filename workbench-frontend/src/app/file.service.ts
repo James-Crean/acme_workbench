@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { Http, Response } from '@angular/http';
+import { Http, Response, URLSearchParams, RequestOptions } from '@angular/http';
 
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
@@ -29,8 +29,14 @@ export class FileService {
       .catch(this.handleError);
   }
 
-  getFileInfo(): Observable<DataFile>{
-    return this.http.get(this.getFileInfoUrl)
+  getFileInfo(fileName: string, dataSetName: string): Observable<DataFile>{
+    let params = new URLSearchParams();
+    params.set('data_file_name', fileName);
+    params.set('data_set_name', dataSetName);
+
+    let options = new RequestOptions();
+    options.params = params;
+    return this.http.get(this.getFileInfoUrl, options)
       .map(this.extractData)
       .catch(this.handleError);
   }

@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+import { DataSet } from '../data-set'
+import { FileService } from '../file.service'
 
 @Component({
   selector: 'data-manager',
   templateUrl: './data-manager.component.html',
-  styleUrls: ['./data-manager.component.css']
+  styleUrls: ['./data-manager.component.css'],
+  providers: [FileService]  
 })
 export class DataManagerComponent implements OnInit {
 
@@ -13,14 +16,26 @@ export class DataManagerComponent implements OnInit {
   //Variable to switch between the dataset-collection and dataset-view components
   //Values: 'dataset-collection', 'dataset-view'
   active_component: string = this.COLLECTION;
-  dataset_name: string
-  constructor() { }
+  dataset_name: string;
+  dataset_info: DataSet;
+  datasets: any;
+  errorMessage: any;
+  constructor(private fileService: FileService) { }
 
   ngOnInit() {
+    this.fileService.getDataSetList()
+    .subscribe(
+      files => {
+        this.datasets = files;
+      },
+      error => {
+        this.errorMessage = <any>error;
+      }
+    );
   }
 
-  view_dataset($event){
+  view_dataset(i){
     this.active_component = this.VIEW;
-    this.dataset_name = $event.target.innerText;
+    this.dataset_info = this.datasets[i];
   }
 }

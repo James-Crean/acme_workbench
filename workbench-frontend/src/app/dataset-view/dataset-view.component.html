@@ -1,10 +1,14 @@
 
 <div class="card grey lighten-4">
   <div class="card-content teal-text text-darken-1">
-    <span class="card-title">{{datasetName}}</span>
+    <span class="card-title">
+      {{ dataset.name }}
+    </span>
     <ul materialize="collapsible" class="collapsible" data-collapsible="accordian">
-      <li *ngFor="let file of file_list">
-        <div class="collapsible-header">{{file.name}}</div>
+      <li *ngFor="let filename of dataset.file_list">
+        <div class="collapsible-header">
+          {{ filename }}
+        </div>
         <div class="collapsible-body">Stuff goes here</div>
       </li>
     </ul>

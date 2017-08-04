@@ -1,9 +1,11 @@
 <div class="data-set-collection">
     <h1 class="card-title teal-text darken-4">Data Sets</h1>
     <ul class="collection">
-        <a href="#!" class="collection-item teal-text darken-1" 
-            *ngFor="let set of datasets" 
-            (click)="pick_dataset($event)">
-            {{set.name}}</a>
+        <a href="#!" 
+           class="collection-item teal-text darken-1" 
+           *ngFor="let set of datasets; let i = index" 
+           (click)="pick_dataset($event, i)">
+            {{set.name}}
+        </a>
     </ul>
 </div>
