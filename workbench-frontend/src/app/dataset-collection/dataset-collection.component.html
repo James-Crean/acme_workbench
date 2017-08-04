@@ -1,3 +1,9 @@
 <div class="data-set-collection">
-    <li *ngFor="let set of datasets">{{set.filename}}</li>
+    <h1 class="card-title teal-text darken-4">Data Sets</h1>
+    <ul class="collection">
+        <a href="#!" class="collection-item teal-text darken-1" 
+            *ngFor="let set of datasets" 
+            (click)="pick_dataset($event)">
+            {{set.filename}}</a>
+    </ul>
 </div>

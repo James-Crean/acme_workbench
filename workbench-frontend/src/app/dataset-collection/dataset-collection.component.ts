@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'dataset-collection',
@@ -8,6 +8,7 @@ import { Component, OnInit } from '@angular/core';
 export class DatasetCollectionComponent implements OnInit {
 
   datasets:Object[];
+
   constructor() { }
 
   ngOnInit() {
@@ -21,4 +22,10 @@ export class DatasetCollectionComponent implements OnInit {
     ]
   }
 
+  @Output()
+  viewDataset: EventEmitter<string> = new EventEmitter<string>();
+
+  pick_dataset($event){
+      this.viewDataset.emit($event);
+  }
 }

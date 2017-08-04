@@ -9,6 +9,7 @@ import { NotificationManagerComponent } from './notification-manager/notificatio
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { SettingsComponent } from './settings/settings.component';
 import { DatasetCollectionComponent } from './dataset-collection/dataset-collection.component';
+import { DatasetViewComponent } from './dataset-view/dataset-view.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { DatasetCollectionComponent } from './dataset-collection/dataset-collect
     NotificationManagerComponent,
     SidebarComponent,
     SettingsComponent,
-    DatasetCollectionComponent
+    DatasetCollectionComponent,
+    DatasetViewComponent
   ],
   imports: [
     BrowserModule
