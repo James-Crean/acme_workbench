@@ -1,16 +1,19 @@
 
 <div class="card grey lighten-4">
   <div class="card-content teal-text text-darken-1">
-    <span class="card-title">
-      {{ dataset.name }}
-    </span>
-    <ul materialize="collapsible" class="collapsible" data-collapsible="accordian">
-      <li *ngFor="let filename of dataset.file_list">
-        <div class="collapsible-header">
-          {{ filename }}
-        </div>
-        <div class="collapsible-body">Stuff goes here</div>
-      </li>
-    </ul>
+    <div (click)="go_back()" class="scale-transition waves-effect waves-light btn">Back</div>
+    <br>
+    <div class="pad-left">
+      <span class="card-title">
+        {{ dataset.name }}
+      </span>
+      <ul materialize="collapsible" class="collapsible" data-collapsible="accordian">
+        <li *ngFor="let filename of dataset.file_list">
+          <div class="collapsible-header">
+            {{ filename }}
+          </div>
+          <div class="collapsible-body">Stuff goes here</div>
+        </li>
+      </ul>
   </div>
 </div>
