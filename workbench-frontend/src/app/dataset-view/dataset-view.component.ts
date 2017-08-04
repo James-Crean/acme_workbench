@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-dataset-view',
+  selector: 'dataset-view',
   templateUrl: './dataset-view.component.html',
   styleUrls: ['./dataset-view.component.css']
 })

@@ -12,4 +12,22 @@ export class DataManagerComponent implements OnInit {
 
   ngOnInit() {
   }
+
+  view_dataset($event){
+    console.log("woot");
+    console.log($event);
+    var filename = $event.target.innerText;
+    console.log(filename);
+  }
+
+  // test(){
+  //   if(this.active_component == "dataset-collection"){
+  //     this.active_component = "dataset-view";
+  //   }
+  //   else {
+  //     this.active_component = "dataset-collection";
+  //   }
+  //   console.log("testing");
+  //   console.log(this.active_component);
+  // }
 }

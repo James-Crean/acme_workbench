@@ -22,8 +22,10 @@ export class DatasetCollectionComponent implements OnInit {
     ]
   }
 
-  pick_file($event){
-      
-  }
+  @Output()
+  viewDataset: EventEmitter<string> = new EventEmitter<string>();
 
+  pick_dataset($event){
+      this.viewDataset.emit($event);
+  }
 }

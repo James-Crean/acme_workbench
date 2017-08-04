@@ -1,7 +1,7 @@
 <div id="data-manager" class="card">
     <div class="card-content">
-        <dataset-collection *ngIf="this.active_component == 'dataset-collection'"></dataset-collection>
-        
+        <dataset-collection (viewDataset)="view_dataset($event)" *ngIf="active_component =='dataset-collection'"></dataset-collection>
+        <dataset-view *ngIf="active_component == 'dataset-view'"></dataset-view>
     </div>
     <div class="card-action">
         <button class="waves-effect waves-light btn teal darken-1">Import</button>
