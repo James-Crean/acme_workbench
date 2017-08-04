@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FileService } from '../file.service'
 import { DataFile } from '../data-file'
 
@@ -14,6 +14,7 @@ export class DatasetViewComponent implements OnInit {
   fileInfoList: DataFile[];
   errorMessage: string;
   @Input() dataset: any;
+  @Output() showDatasetCollection: EventEmitter<string> = new EventEmitter<string>();
 
   constructor(private fileService: FileService) { }
 
@@ -26,18 +27,23 @@ export class DatasetViewComponent implements OnInit {
       return;
     }
     this.fileService.getFileInfo(this.dataset.file_list[i], this.dataset.name)
-        .subscribe(
-          file => {
-            let newFile = new DataFile({
-              path: <string>file.path,
-              display_name: <string>file.display_name,
-              owner: <string>file.owner,
-              allowed_access: <string[]>file.allowed_access,
-              data_type: <number>file.data_type              
-            });
-            this.fileInfoList[i] = newFile;
-          },
-          error => this.errorMessage = <any>error
-        );
+    .subscribe(
+      file => {
+        let newFile = new DataFile({
+          path: <string>file.path,
+          display_name: <string>file.display_name,
+          owner: <string>file.owner,
+          allowed_access: <string[]>file.allowed_access,
+          data_type: <number>file.data_type              
+        });
+        this.fileInfoList[i] = newFile;
+      },
+      error => {
+        this.errorMessage = <any>error;
+      });
+  }
+
+  go_back(){
+    this.showDatasetCollection.emit();
   }
 }

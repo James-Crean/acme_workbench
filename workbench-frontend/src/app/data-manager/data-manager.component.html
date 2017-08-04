@@ -6,6 +6,7 @@
             *ngIf="active_component =='dataset-collection'">
         </dataset-collection>
         <dataset-view
+            (showDatasetCollection)="show_dataset_collection()"
             [dataset]= "dataset_info"
             *ngIf="active_component == 'dataset-view'">
         </dataset-view>

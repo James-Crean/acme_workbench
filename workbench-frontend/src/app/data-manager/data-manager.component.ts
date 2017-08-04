@@ -47,4 +47,8 @@ export class DataManagerComponent implements OnInit {
     this.active_component = this.VIEW;
     this.dataset_info = this.datasets[i];
   }
+
+  show_dataset_collection(){
+    this.active_component = this.COLLECTION;
+  }
 }
