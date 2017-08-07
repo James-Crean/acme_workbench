@@ -13,6 +13,7 @@ import { SidebarComponent } from './sidebar/sidebar.component';
 import { SettingsComponent } from './settings/settings.component';
 import { DatasetCollectionComponent } from './dataset-collection/dataset-collection.component';
 import { DatasetViewComponent } from './dataset-view/dataset-view.component';
+import { FilePermissionsModalComponent } from './file-permissions-modal/file-permissions-modal.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { DatasetViewComponent } from './dataset-view/dataset-view.component';
     SidebarComponent,
     SettingsComponent,
     DatasetCollectionComponent,
-    DatasetViewComponent
+    DatasetViewComponent,
+    FilePermissionsModalComponent
   ],
   imports: [
     BrowserModule,
