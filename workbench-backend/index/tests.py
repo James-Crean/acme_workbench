@@ -116,6 +116,9 @@ class IndexViewTests(TestCase):
         self.assertFalse(res.context['request'].user.is_authenticated())
 
     def test_get_user_list(self):
+        """
+        test of the get user list view
+        """
         client = Client()
         url = '/get_user_list/'
         expected_result = ['test_user', 'baldwin32']

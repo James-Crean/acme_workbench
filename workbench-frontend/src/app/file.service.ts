@@ -14,11 +14,17 @@ export class FileService {
   private getDataSetListUrl = '/file_manager/get_data_set_list/';
   private getDataSetUrl = '/file_manager/get_data_set/';
   private getFileInfoUrl = '/file_manager/get_file_info/';
-
+  private getUserListUrl = '/get_user_list/';
   constructor(private http: Http) { }
 
   getDataSetList(): Observable<any[]>{
     return this.http.get(this.getDataSetListUrl)
+      .map(this.extractData)
+      .catch(this.handleError);
+  }
+
+  getUserList(): Observable<string[]>{
+    return this.http.get(this.getUserListUrl)
       .map(this.extractData)
       .catch(this.handleError);
   }
