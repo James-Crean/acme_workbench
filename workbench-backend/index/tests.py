@@ -124,6 +124,6 @@ class IndexViewTests(TestCase):
         expected_result = ['test_user', 'baldwin32']
         res = client.get(url)
         self.assertEqual(res.status_code, 200)
-        # data = json.loads(res.content)
-        # for user in expected_result:
-        #     pass
+        data = json.loads(res.content)
+        for user in data:
+            self.assertTrue(user['username'] in expected_result)
