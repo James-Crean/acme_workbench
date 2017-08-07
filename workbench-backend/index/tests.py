@@ -1,3 +1,5 @@
+import json
+
 from django.test import TestCase
 from django.test import Client
 
@@ -90,30 +92,6 @@ class IndexViewTests(TestCase):
         Test rejection of invalid credentials
         """
         client = Client()
-        # res = client.get('/register')
-        # self.assertEqual(res.status_code, 200)
-
-        # test_user = 'test_user'
-        # test_pass = 'test_pass'
-        # test_email = 'test@test.com'
-        # first = 'test'
-        # last = 'user'
-
-        # post_data = {
-        #     'username': test_user,
-        #     'password1': test_pass,
-        #     'password2': test_pass,
-        #     'firstname': first,
-        #     'lastname': last,
-        #     'email': test_email
-        # }
-        # res = client.post('/register', post_data)
-        # self.assertEqual(res.status_code, 200)
-
-        # res = client.get('/login')
-        # self.assertEqual(res.status_code, 200)
-
-        # post_data['password'] = 'IM A LITTLE TEA POT'
         post_data = {
             'username': 'test_user',
             'password': 'IM A LITTLE TEA POT'
@@ -126,30 +104,6 @@ class IndexViewTests(TestCase):
         test users ability to logout
         """
         client = Client()
-        # res = client.get('/register')
-        # self.assertEqual(res.status_code, 200)
-
-        # test_user = 'test_user'
-        # test_pass = 'test_pass'
-        # test_email = 'test@test.com'
-        # first = 'test'
-        # last = 'user'
-
-        # post_data = {
-        #     'username': test_user,
-        #     'password1': test_pass,
-        #     'password2': test_pass,
-        #     'firstname': first,
-        #     'lastname': last,
-        #     'email': test_email
-        # }
-        # res = client.post('/register', post_data)
-        # self.assertEqual(res.status_code, 200)
-
-        # res = client.get('/login')
-        # self.assertEqual(res.status_code, 200)
-
-        # post_data['password'] = test_pass
         post_data = {
             'password': 'qwertyuiop',
             'username': 'test_user'
@@ -160,3 +114,13 @@ class IndexViewTests(TestCase):
         res = client.get('/logout')
         self.assertEqual(res.status_code, 200)
         self.assertFalse(res.context['request'].user.is_authenticated())
+
+    def test_get_user_list(self):
+        client = Client()
+        url = '/get_user_list/'
+        expected_result = ['test_user', 'baldwin32']
+        res = client.get(url)
+        self.assertEqual(res.status_code, 200)
+        data = json.loads(res.content)
+        for user in expected_result:
+            self.assertTrue(user in data)

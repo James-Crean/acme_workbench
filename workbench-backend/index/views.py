@@ -1,9 +1,11 @@
+import json
+
 from django.shortcuts import render, redirect
 from django.template import RequestContext, loader
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.models import Group
+from django.contrib.auth.models import Group, User
 from index.forms import UserCreationForm
 from django.views.decorators.csrf import csrf_protect
 from django.core.exceptions import ObjectDoesNotExist
@@ -103,3 +105,10 @@ def user_register(request):
         "registered": registered
     }
     return render(request, "register.html", data)
+
+def get_user_list(request):
+    """
+    Returns a list of all users
+    """
+    users = [user.username for user in User.objects.all()]
+    return HttpResponse(json.dumps(users))
