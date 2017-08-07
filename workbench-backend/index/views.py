@@ -110,5 +110,8 @@ def get_user_list(request):
     """
     Returns a list of all users
     """
-    users = [user.username for user in User.objects.all()]
+    users = [{
+        'id': user.id,
+        'username': user.username
+    } for user in User.objects.all()]
     return HttpResponse(json.dumps(users))
