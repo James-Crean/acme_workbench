@@ -18,6 +18,7 @@ import { DatasetCollectionComponent } from './dataset-collection/dataset-collect
 import { DatasetViewComponent } from './dataset-view/dataset-view.component';
 import { DataImportComponent } from './data-import/data-import.component';
 import { DatasetDeleteComponent } from './dataset-delete/dataset-delete.component';
+import { FilePermissionsModalComponent } from './file-permissions-modal/file-permissions-modal.component';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import { DatasetDeleteComponent } from './dataset-delete/dataset-delete.componen
     FileDropDirective, 
     FileSelectDirective, 
     DatasetDeleteComponent
+    FilePermissionsModalComponent
   ],
   imports: [
     BrowserModule,
