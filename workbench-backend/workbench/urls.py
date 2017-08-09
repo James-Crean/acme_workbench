@@ -29,5 +29,7 @@ urlpatterns = [
     url(r'^get_user_list/?$', index_views.get_user_list, name='getUserList'),
     url(r'^file_manager/get_data_set_list/?$', file_manager_views.get_data_set_list, name='getDataSetList'),
     url(r'^file_manager/get_data_set/?$', file_manager_views.get_data_set, name='getDataSet'),
-    url(r'^file_manager/get_file_info/?$', file_manager_views.get_file_info, name='getFileInfo')
+    url(r'^file_manager/get_file_info/?$', file_manager_views.get_file_info, name='getFileInfo'),
+    url(r'^file_manager/upload_dataset/(?P<dataset_name>.+)$', file_manager_views.upload_dataset, name='uploadDataSet'),
+    url(r'^file_manager/delete_dataset/(?P<dataset_name>.+)$', file_manager_views.delete_dataset, name='deleteDataSet')
 ]
