@@ -10,12 +10,12 @@
       </div>
     </div>
     <div class="card grey lighten-4">
-      <div class="card-content teal-text text-darken-1">
+      <div class="card-content red-text text-darken-1">
         <span class="card-title">Remove Permissions</span>
         <select multiple materialize="material_select" [materializeSelectOptions]="allowed_users">
           <option *ngFor="let user of allowed_users" [value]="user">{{user}}</option>
         </select>
-        <button class="waves-effect waves-red btn">Remove Selected</button>
+        <button class="waves-effect waves-red btn btn-red">Remove Selected</button>
       </div>
     </div>
   </div>
