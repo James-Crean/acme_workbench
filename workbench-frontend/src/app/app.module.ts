@@ -34,7 +34,7 @@ import { FilePermissionsModalComponent } from './file-permissions-modal/file-per
     DataImportComponent,
     FileDropDirective, 
     FileSelectDirective, 
-    DatasetDeleteComponent
+    DatasetDeleteComponent,
     FilePermissionsModalComponent
   ],
   imports: [

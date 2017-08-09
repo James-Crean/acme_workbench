@@ -11,7 +11,51 @@
             *ngIf="active_component == 'dataset-view'">
         </dataset-view>
     </div>
-    <div class="card-action">
-        <button class="waves-effect waves-light btn teal darken-1">Import</button>
+    <div class="card-content" *ngIf="uploader?.queue?.length > 0">
+        <h3>Upload queue</h3>
+        <p>Queue length: {{ uploader?.queue?.length }}</p>
+
+        <table class="table">
+            <thead>
+            <tr>
+                <th width="50%">Name</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let item of uploader.queue">
+                <td><strong>{{ item?.file?.name }}</strong></td>
+            </tr>
+            </tbody>
+        </table>
+
+        <div>
+            <button type="button" class="btn btn-success btn-s"
+                    (click)="upload()" [disabled]="!uploader.getNotUploadedItems().length">
+                <span class="glyphicon glyphicon-upload"></span> Upload all
+            </button>
+            <button type="button" class="btn btn-warning btn-s"
+                    (click)="uploader.cancelAll()" [disabled]="!uploader.isUploading">
+                <span class="glyphicon glyphicon-ban-circle"></span> Cancel all
+            </button>
+            <button type="button" class="btn btn-danger btn-s"
+                    (click)="uploader.clearQueue()" [disabled]="!uploader.queue.length">
+                <span class="glyphicon glyphicon-trash"></span> Remove all
+            </button>
+        </div>
     </div>
+    <div class="card-action">
+        <!-- <button class="waves-effect waves-light btn teal darken-1">Import</button> -->
+        <a class="waves-effect waves-light btn modal-trigger" 
+           *ngIf="active_component == 'dataset-collection'"
+           href="#data-import-modal">
+            Import
+        </a>
+        <a class="waves-effect waves-light btn modal-trigger red white-text"
+           *ngIf="active_component == 'dataset-view'" 
+           href="#data-delete-modal">
+            Delete
+        </a>  
+    </div>
+    <data-import [uploader]="uploader" [datasets]="datasets"></data-import>
+    <dataset-delete (deleteSuccess)="deleteSuccess()" [dataset]="dataset_info" *ngIf="active_component == 'dataset-view'"></dataset-delete>
 </div>
