@@ -53,7 +53,7 @@ export class DatasetViewComponent implements OnInit {
     this.showDatasetCollection.emit();
   }
 
-  openModal(){
-    this.filePermissionsModal.openModal();
+  openModal(index: number){
+    this.filePermissionsModal.openModal(this.fileInfoList[index].allowed_access);
   }
 }

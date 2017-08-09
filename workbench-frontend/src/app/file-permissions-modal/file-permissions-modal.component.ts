@@ -1,7 +1,8 @@
-import { Component, OnInit, EventEmitter } from '@angular/core';
+import { Component, EventEmitter, Input } from '@angular/core';
 import { MaterializeAction } from 'angular2-materialize';
 
 import { FileService } from '../file.service'
+import { DataFile } from '../data-file'
 
 @Component({
   selector: 'file-permissions-modal',
@@ -9,17 +10,15 @@ import { FileService } from '../file.service'
   styleUrls: ['./file-permissions-modal.component.css'],
   providers: [FileService] 
 })
-export class FilePermissionsModalComponent implements OnInit {
+export class FilePermissionsModalComponent {
 
   modalActions = new EventEmitter<string|MaterializeAction>();
-  user_list: Object[]; //will need to be changed from just string eventually
+  user_list: Object[];
   errorMessage: any;
+  allowed_users: string[]; 
   constructor(private fileService: FileService) { }
 
-  ngOnInit() {
-  }
-
-  openModal(){
+  openModal(allowed_users: string[]){ 
     this.fileService.getUserList()
     .subscribe(
       files => {
@@ -29,6 +28,8 @@ export class FilePermissionsModalComponent implements OnInit {
         this.errorMessage = <any>error;
       }
     );
+    this.allowed_users = allowed_users;
+
     this.modalActions.emit({action:"modal",params:['open']});
   }
 

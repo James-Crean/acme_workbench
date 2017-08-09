@@ -27,7 +27,7 @@
             </li>
             <li class="collection-item teal-text darken-1" style="padding-left: 2em">
               access: <span *ngFor="let j of fileInfoList[i].allowed_access"> {{ j }} </span>
-              <a (click)="openModal()" href="#modal1" class="waves-effect waves-light btn btn-small modal-trigger"><i class="material-icons">add</i></a>
+              <a (click)="openModal(i)" href="#modal1" class="waves-effect waves-light btn btn-small modal-trigger"><i class="material-icons">add</i></a>
             </li>
           </ul>
         </div>
