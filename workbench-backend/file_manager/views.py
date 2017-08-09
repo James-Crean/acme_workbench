@@ -1,8 +1,12 @@
 import json
+import os
+from shutil import rmtree
 
 from django.http import HttpResponse
 from django.contrib.auth.models import User
 from .models import DataFile, DataSet, DataType
+from django.views.decorators.csrf import csrf_exempt
+from local_settings import userdata_storage_path
 
 def get_data_set_list(request):
     """
@@ -90,3 +94,103 @@ def get_node_list(request):
         'esg.ccs.ornl.gov'
     ]
     return HttpResponse(json.dumps(known_nodes))
+
+@csrf_exempt
+def upload_dataset(request, dataset_name):
+    """
+    Handles user upload for new data sets
+    
+    parameters:
+        dataset_name (str)
+        
+    return:
+        status 200 if success, else 401
+    """
+    if not request.method == "POST":
+        return HttpResponse(status=401)
+    if not request.user.is_authenticated():
+        return HttpResponse(status=401)
+
+    user = User.objects.get(username=request.user)
+    try:
+        dataset = DataSet.objects.get(
+            name=dataset_name,
+            owner=user)
+    except:
+        dataset = DataSet(
+            name=dataset_name,
+            owner=user)
+        dataset.save()
+        dataset.allowed_access.add(user)
+    
+
+    dataset_path = os.path.join(userdata_storage_path, dataset_name + '_' + user.username)
+    if not os.path.exists(dataset_path):
+        os.makedirs(dataset_path)
+
+    for item in request.FILES.getlist('file'):
+        path = os.path.join(dataset_path, str(item))
+        name = str(item)
+        with open(path, 'wb') as outfile:
+            for chunk in item.chunks():
+                outfile.write(chunk)
+
+        data_type = DataType.TEXT.value
+        if name[-3:] == 'xml':
+            data_type = DataType.XML.value
+        elif name[-4:] == 'json':
+            data_type = DataType.JSON.value
+        elif name[-2:] == 'nc':
+            data_type = DataType.NETCDF.value
+        elif name[-3:] == 'png':
+            data_type = DataType.IMAGE.value
+
+        new_file = DataFile(
+            path=path,
+            display_name=str(item),
+            owner=user,
+            data_type=int(data_type))
+        new_file.save()
+        new_file.allowed_access.add(user)
+        dataset.file_list.add(new_file)
+        dataset.save()
+
+    return HttpResponse()
+
+def delete_dataset(request, dataset_name):
+    """
+    Delete the database entry as well as the data
+    
+    parameters:
+        dataset_name (str): the dataset to delete
+    
+    """
+    if not dataset_name:
+        return HttpResponse(status=401)
+    if not request.method == 'DELETE':
+        return HttpResponse(status=403)
+    if not request.user.is_authenticated():
+        return HttpResponse(status=403)
+
+    user = User.objects.get(username=request.user)
+    dataset = DataSet.objects.get(name=dataset_name)
+    if not dataset:
+        return HttpResponse(status=404)
+    if not dataset.owner.id == user.id:
+        return HttpResponse(status=403)
+
+    datafiles = dataset.file_list.all()
+    if not datafiles:
+        dataset.delete()
+        dataset.save()
+        return HttpResponse()
+
+    path = os.sep.join(datafiles[0].path.split(os.sep)[:-1])
+    rmtree(path)
+
+    for datafile in dataset.file_list.all():
+        datafile.delete()
+        datafile.save()
+    dataset.delete()
+    dataset.save()
+    return HttpResponse()

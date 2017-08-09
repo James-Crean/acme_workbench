@@ -64,6 +64,7 @@ class DataSet(BaseModel):
     allowed_access = models.ManyToManyField(User, related_name='data_set_allowed_access_users')
     file_list = models.ManyToManyField(DataFile, related_name='data_set_contents')
     metadata = models.CharField(max_length=1023)
+    owner = models.ForeignKey(User, related_name='dataset_owner')
 
     def toDict(self):
         """
