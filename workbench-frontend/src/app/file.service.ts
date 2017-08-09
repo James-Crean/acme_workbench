@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { Http, Response, URLSearchParams, RequestOptions } from '@angular/http';
+import { Http, Response, URLSearchParams, RequestOptions, Headers } from '@angular/http';
 
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
@@ -12,9 +12,10 @@ import { DataSet } from './data-set'
 export class FileService {
 
   private getDataSetListUrl = '/file_manager/get_data_set_list/';
-  private getDataSetUrl = '/file_manager/get_data_set/';
-  private getFileInfoUrl = '/file_manager/get_file_info/';
-  private getUserListUrl = '/get_user_list/';
+  private getDataSetUrl =     '/file_manager/get_data_set/';
+  private getFileInfoUrl =    '/file_manager/get_file_info/';
+  private deleteDatasetUrl =  '/file_manager/delete_dataset/';  
+  private getUserListUrl =    '/get_user_list/';
   constructor(private http: Http) { }
 
   getDataSetList(): Observable<any[]>{
@@ -22,19 +23,16 @@ export class FileService {
       .map(this.extractData)
       .catch(this.handleError);
   }
-
   getUserList(): Observable<string[]>{
     return this.http.get(this.getUserListUrl)
       .map(this.extractData)
       .catch(this.handleError);
   }
-
   getDataSet(): Observable<DataSet>{
     return this.http.get(this.getDataSetUrl)
       .map(this.extractData)
       .catch(this.handleError);
   }
-
   getFileInfo(fileName: string, dataSetName: string): Observable<DataFile>{
     let params = new URLSearchParams();
     params.set('data_file_name', fileName);
@@ -42,8 +40,18 @@ export class FileService {
 
     let options = new RequestOptions();
     options.params = params;
+
     return this.http.get(this.getFileInfoUrl, options)
       .map(this.extractData)
+      .catch(this.handleError);
+  }
+  deleteDataset(name: string, csrf: string): Observable<any>{
+    let headers = new Headers();
+    headers.set('X-CSRFToken', csrf);
+
+    let options = new RequestOptions();
+    options.headers = headers;
+    return this.http.delete(this.deleteDatasetUrl + name, options)
       .catch(this.handleError);
   }
 
@@ -52,7 +60,6 @@ export class FileService {
     console.log(body);
     return body || {};
   }
-
   private handleError(error: Response | any){
     console.log('ERROR');
     console.log(error.toString())
