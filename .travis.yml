@@ -4,7 +4,7 @@ dist: trusty
 python:
   - 2.7
 notifications:
-  - slack: acmeclimate:LUHYbmd1s5iWBMGakOEweeB1
+  slack: acmeclimate:LUHYbmd1s5iWBMGakOEweeB1
 env:
   - DJANGO=1.10.5
 
