@@ -36,6 +36,7 @@ export class DatasetViewComponent implements OnInit {
     .subscribe(
       file => {
         let newFile = new DataFile({
+          id: <number>file.id, 
           path: <string>file.path,
           display_name: <string>file.display_name,
           owner: <string>file.owner,
@@ -54,6 +55,6 @@ export class DatasetViewComponent implements OnInit {
   }
 
   openModal(index: number){
-    this.filePermissionsModal.openModal(this.fileInfoList[index].allowed_access);
+    this.filePermissionsModal.openModal(this.fileInfoList[index]);
   }
 }

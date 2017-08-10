@@ -15,6 +15,7 @@ class FileManagerViewTests(TestCase):
         Test '/file_manager/get_data_set_list/'
         """
         expected_result = [{
+            "id": 47,
             "file_list": ['query1.txt', 'query2.txt', 'test_query.sh'],
             "allowed_access": ["test_user"],
             "name": "test_user_data",
@@ -30,6 +31,7 @@ class FileManagerViewTests(TestCase):
         self.assertEqual(res.status_code, 200)
 
         data = json.loads(res.content)
+        print data
         self.assertTrue(data == expected_result)
     
     def test_get_data_set_list_invalid(self):
@@ -45,6 +47,7 @@ class FileManagerViewTests(TestCase):
         test '/file_manager/get_data_set/'
         """
         expected_result = {
+            "id": 47,
             "file_list": ['query1.txt', 'query2.txt', 'test_query.sh'],
             "allowed_access": ["test_user"],
             "owner": "test_user",
@@ -103,6 +106,7 @@ class FileManagerViewTests(TestCase):
         test file_manager.get_file_info
         """
         expected_result = {
+            "id": 93,
             'owner': 'test_user',
             'path': '/Users/baldwin32/projects/acme_workbench/userdata/test_user_data_test_user/query1.txt',
             'display_name': 'query1.txt',

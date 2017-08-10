@@ -48,6 +48,7 @@ class DataFile(BaseModel):
         Dump contents to dict
         """
         return {
+            'id': self.id,
             'path': self.path,
             'display_name': self.display_name,
             'owner': self.owner.username,
@@ -71,6 +72,7 @@ class DataSet(BaseModel):
         Dump contents to a dict
         """
         return {
+            'id': self.id,
             'name': self.name,
             'metadata': self.metadata,
             'allowed_access': [user.username for user in self.allowed_access.all()],

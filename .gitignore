@@ -10,3 +10,5 @@ workbench-backend/index/migrations/
 workbench-backend/file_manager/migrations/
 workbench-backend/local_settings.py
 workbench-frontend/package-lock.json
+.coverage
+htmlcov/

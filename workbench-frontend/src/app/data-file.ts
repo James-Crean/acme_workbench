@@ -1,4 +1,5 @@
 export class DataFile {
+    id: number;
     path: string;
     display_name: string;
     owner: string;

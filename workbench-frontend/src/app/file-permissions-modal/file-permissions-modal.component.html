@@ -3,19 +3,19 @@
     <div class="card grey lighten-4">
       <div class="card-content teal-text text-darken-1">
         <span class="card-title">Add Permissions</span>
-        <select multiple materialize="material_select" [materializeSelectOptions]="user_list">
-          <option *ngFor="let user of user_list" [value]="user.id">{{user.username}}</option>
+        <select id="permission-modal-add" multiple materialize="material_select" [materializeSelectOptions]="user_list" [(ngModel)]="addSelectedUsers">
+          <option *ngFor="let user of user_list" [value]="user.username">{{user.username}}</option>
         </select>
-        <button class="waves-effect waves-green btn">Add Selected</button>
+        <button class="waves-effect waves-green btn" (click)=addPermissions()>Add Selected</button>
       </div>
     </div>
     <div class="card grey lighten-4">
       <div class="card-content red-text text-darken-3">
         <span class="card-title">Remove Permissions</span>
-        <select multiple materialize="material_select" [materializeSelectOptions]="allowed_users">
+        <select multiple materialize="material_select" [materializeSelectOptions]="allowed_users" [(ngModel)]="removeSelectedUsers">
           <option *ngFor="let user of allowed_users" [value]="user">{{user}}</option>
         </select>
-        <button class="waves-effect waves-red btn red">Remove Selected</button>
+        <button class="waves-effect waves-red btn red" (click)="removePermissions()">Remove Selected</button>
       </div>
     </div>
   </div>

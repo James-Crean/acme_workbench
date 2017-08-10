@@ -11,11 +11,13 @@ import { DataSet } from './data-set'
 @Injectable()
 export class FileService {
 
-  private getDataSetListUrl = '/file_manager/get_data_set_list/';
-  private getDataSetUrl =     '/file_manager/get_data_set/';
-  private getFileInfoUrl =    '/file_manager/get_file_info/';
-  private deleteDatasetUrl =  '/file_manager/delete_dataset/';  
-  private getUserListUrl =    '/get_user_list/';
+  private getDataSetListUrl =        '/file_manager/get_data_set_list/';
+  private getDataSetUrl =            '/file_manager/get_data_set/';
+  private getFileInfoUrl =           '/file_manager/get_file_info/';
+  private deleteDatasetUrl =         '/file_manager/delete_dataset/';
+  private changeFilePermissionsUrl = '/file_manager/change_file_permissions/';  
+  private getUserListUrl =           '/get_user_list/';
+
   constructor(private http: Http) { }
 
   getDataSetList(): Observable<any[]>{
@@ -52,6 +54,23 @@ export class FileService {
     let options = new RequestOptions();
     options.headers = headers;
     return this.http.delete(this.deleteDatasetUrl + name, options)
+      .catch(this.handleError);
+  }
+  addFilePermissions(users: string[], csrf: string): Observable<any>{
+    console.log(csrf);
+    let options = new RequestOptions();
+    options.headers = new Headers({'X-CSRFToken': csrf});
+    let body = {'usernames': users};
+    console.log(body)
+    return this.http.post(this.changeFilePermissionsUrl, body, options)
+      .catch(this.handleError);
+  }
+  removeFilePermissions(users: string[], csrf: string): Observable<any>{
+    console.log(csrf);
+    let options = new RequestOptions();
+    options.headers = new Headers({'Content-Type': 'application/json', 'X-CSRFToken': csrf});
+    options.body = {'usernames': users}
+    return this.http.delete(this.changeFilePermissionsUrl, options)
       .catch(this.handleError);
   }
 

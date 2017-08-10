@@ -173,7 +173,7 @@ def delete_dataset(request, dataset_name):
         return HttpResponse(status=403)
     if not request.user.is_authenticated():
         return HttpResponse(status=403)
-
+    
     user = User.objects.get(username=request.user)
     try:
         dataset = DataSet.objects.get(name=dataset_name)
@@ -197,3 +197,25 @@ def delete_dataset(request, dataset_name):
     dataset.delete()
     dataset.save()
     return HttpResponse()
+
+def change_file_permissions(request):
+    """
+    Grants file access privileges for a set of users.
+
+    return: 200 if success, else 401
+    """
+    #TODO: Check that user is authenticated
+    #TODO: Check that user is owner of file
+    #TODO: Grant privileges to selected file AND dataset? 
+    if request.method not in ["POST", "DELETE"]:
+        return HttpResponse(status=401)
+    if not request.user.is_authenticated():
+        return HttpResponse(status=401)
+    elif request.method == "POST":
+        if(request.body):
+            data = json.loads(request.body)
+            
+        return HttpResponse(status=200)
+    else:
+        print "got a post: ", request.POST
+        return HttpResponse(status=200)
