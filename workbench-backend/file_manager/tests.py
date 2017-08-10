@@ -14,10 +14,10 @@ class FileManagerViewTests(TestCase):
         Test '/file_manager/get_data_set_list/'
         """
         expected_result = [{
-            "file_list": ["dummy_1", "dummy_2"],
+            "file_list": ['query1.txt', 'query2.txt', 'test_query.sh'],
             "allowed_access": ["test_user"],
-            "name": "dummy set",
-            "metadata": "This is a dummy data set"
+            "name": "test_user_data",
+            "metadata": ""
         }]
         client = Client()
         client.login(
@@ -35,10 +35,10 @@ class FileManagerViewTests(TestCase):
         test '/file_manager/get_data_set/'
         """
         expected_result = {
-            "file_list": ["dummy_1", "dummy_2"],
+            "file_list": ['query1.txt', 'query2.txt', 'test_query.sh'],
             "allowed_access": ["test_user"],
-            "name": "dummy set",
-            "metadata": "This is a dummy data set"
+            "name": "test_user_data",
+            "metadata": ""
         }
         client = Client()
         client.login(
@@ -57,9 +57,9 @@ class FileManagerViewTests(TestCase):
         """
         expected_result = {
             'owner': 'test_user',
-            'path': '/some/path/dummy_1.nc',
-            'display_name': 'dummy_1',
-            'data_type': 1,
+            'path': '/Users/baldwin32/projects/acme_workbench/userdata/test_user_data_test_user/query1.txt',
+            'display_name': 'query1.txt',
+            'data_type': 2,
             'allowed_access': ['test_user']
         }
         client = Client()
@@ -68,8 +68,8 @@ class FileManagerViewTests(TestCase):
             password='qwertyuiop')
 
         params = {
-            'data_set_name': 'dummy set',
-            'data_file_name': 'dummy_1'
+            'data_set_name': 'test_user_data',
+            'data_file_name': 'query1.txt'
         }
         res = client.get('/file_manager/get_file_info/', params)
         self.assertEqual(res.status_code, 200)
