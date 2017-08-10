@@ -41,12 +41,16 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_nose',
     'django_extensions',
     'file_manager',
     'index',
     'run_manager',
     'vis_manager'
 ]
+
+# Use nose to run all tests
+TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

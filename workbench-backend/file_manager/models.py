@@ -74,5 +74,6 @@ class DataSet(BaseModel):
             'name': self.name,
             'metadata': self.metadata,
             'allowed_access': [user.username for user in self.allowed_access.all()],
-            'file_list': [file.display_name for file in self.file_list.all()]
+            'file_list': [file.display_name for file in self.file_list.all()],
+            'owner': str(self.owner)
         }

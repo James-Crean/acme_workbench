@@ -47,10 +47,11 @@ def get_data_set(request):
     except Exception as e:
         return HttpResponse(status=402)
 
-    data_set = DataSet.objects.filter(allowed_access=site_user.id)
-    if not data_set:
+    try:
+        data_set = DataSet.objects.get(allowed_access=site_user.id, name=data_set_name)
+    except:
         return HttpResponse(json.dumps({}))
-    response = json.dumps(data_set[0].toDict())
+    response = json.dumps(data_set.toDict())
     return HttpResponse(response)
 
 def get_file_info(request):
@@ -65,35 +66,38 @@ def get_file_info(request):
     except Exception as e:
         return HttpResponse(status=402)
 
-    data_set = DataSet.objects.get(allowed_access=site_user.id, name=data_set_name)
-    if not data_set:
+    data_set = None
+    try:
+        data_set = DataSet.objects.get(allowed_access=site_user.id, name=data_set_name)
+    except:
         return HttpResponse(json.dumps({}))
 
-    data_file = data_set.file_list.get(display_name=data_file_name)
-    if not data_file:
+    try:
+        data_file = data_set.file_list.get(display_name=data_file_name)
+    except:
         return HttpResponse(json.dumps({}))
 
     response = json.dumps(data_file.toDict())
     return HttpResponse(response)
 
-def get_node_list(request):
-    """
-    Return a list of known ESGF nodes
-    """
-    known_nodes = [
-        'pcmdi.llnl.gov',
-        'esgf-node.jpl.nasa.gov',
-        'esgf-index1.ceda.ac.uk',
-        'esgf-data.dkrz.de',
-        'esg-dn1.nsc.liu.se',
-        'esgf-node.ipsl.upmc.fr',
-        'esgf.nci.org.au'
-        'esg-dn1.nsc.liu.se',
-        'esgdata.gfdl.noaa.gov',
-        'esgf.nccs.nasa.gov',
-        'esg.ccs.ornl.gov'
-    ]
-    return HttpResponse(json.dumps(known_nodes))
+# def get_node_list(request):
+#     """
+#     Return a list of known ESGF nodes
+#     """
+#     known_nodes = [
+#         'pcmdi.llnl.gov',
+#         'esgf-node.jpl.nasa.gov',
+#         'esgf-index1.ceda.ac.uk',
+#         'esgf-data.dkrz.de',
+#         'esg-dn1.nsc.liu.se',
+#         'esgf-node.ipsl.upmc.fr',
+#         'esgf.nci.org.au'
+#         'esg-dn1.nsc.liu.se',
+#         'esgdata.gfdl.noaa.gov',
+#         'esgf.nccs.nasa.gov',
+#         'esg.ccs.ornl.gov'
+#     ]
+#     return HttpResponse(json.dumps(known_nodes))
 
 @csrf_exempt
 def upload_dataset(request, dataset_name):
@@ -165,16 +169,15 @@ def delete_dataset(request, dataset_name):
         dataset_name (str): the dataset to delete
     
     """
-    if not dataset_name:
-        return HttpResponse(status=401)
     if not request.method == 'DELETE':
         return HttpResponse(status=403)
     if not request.user.is_authenticated():
         return HttpResponse(status=403)
 
     user = User.objects.get(username=request.user)
-    dataset = DataSet.objects.get(name=dataset_name)
-    if not dataset:
+    try:
+        dataset = DataSet.objects.get(name=dataset_name)
+    except:
         return HttpResponse(status=404)
     if not dataset.owner.id == user.id:
         return HttpResponse(status=403)
