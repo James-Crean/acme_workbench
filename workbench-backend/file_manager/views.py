@@ -200,22 +200,43 @@ def delete_dataset(request, dataset_name):
 
 def change_file_permissions(request):
     """
-    Grants file access privileges for a set of users.
+    If request method is POST, updates the permissions to add the new users
+    If request method is DELETE, updates to remove permissions of given users
+
+    parameters:
+        user_list (list of strings): the list of users to adjust the permissions for
+        file: the id of the file having its permissions altered
 
     return: 200 if success, else 401
     """
-    #TODO: Check that user is authenticated
-    #TODO: Check that user is owner of file
-    #TODO: Grant privileges to selected file AND dataset? 
-    if request.method not in ["POST", "DELETE"]:
-        return HttpResponse(status=401)
+    # check the user logged in
     if not request.user.is_authenticated():
         return HttpResponse(status=401)
-    elif request.method == "POST":
-        if(request.body):
-            data = json.loads(request.body)
-            
-        return HttpResponse(status=200)
-    else:
-        print "got a post: ", request.POST
-        return HttpResponse(status=200)
+    # check the request is of the allowed types
+    if request.method not in ['POST', 'DELETE']:
+        return HttpResponse(status=401)
+
+    # get the params we need
+    try:
+        data = json.loads(request.body)
+        user_list = data['user_list']
+        file = data['file']
+    except Exception as e:
+        return HttpResponse(status=401)
+    # get the DataFile we're mutating
+    try:
+        dataFile = DataFile.objects.get(id=file)
+    except Exception as e:
+        return HttpResponse(status=401)
+    # Check the requesting user is the datas owner
+    request_user = User.objects.get(username=request.user)
+    if not dataFile.owner.id == request_user.id:
+        return HttpResponse(status=403)
+    # perform the mutation
+    for user in user_list:
+        u = User.objects.get(username=user)
+        if request.method == 'POST':
+            dataFile.allowed_access.add(u)
+        else:
+            dataFile.allowed_access.remove(u)
+    return HttpResponse()

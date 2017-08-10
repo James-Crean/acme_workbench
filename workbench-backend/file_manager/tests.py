@@ -252,3 +252,107 @@ class FileManagerViewTests(TestCase):
             password='qwertyuiop')
         res = client.delete('/file_manager/delete_dataset/TEST')
         self.assertEqual(res.status_code, 404)
+    
+    def test_change_permissions_unauth(self):
+        """
+        test file_manager.change_file_permissions returns status=401 on unauthenticated requests
+        """
+        client = Client()
+        res = client.get('/file_manager/change_file_permissions/')
+        self.assertEqual(res.status_code, 401)
+    
+    def test_change_permissions_bad_method(self):
+        """
+        test file_manager.change_file_permissions returns status=401 on unauthenticated requests
+        """
+        client = Client()
+        client.login(
+            username='test_user',
+            password='qwertyuiop')
+        res = client.get('/file_manager/change_file_permissions/')
+        self.assertEqual(res.status_code, 401)
+    
+    def test_change_permissions_bad_params(self):
+        """
+        test file_manager.change_file_permissions returns status=401 with no params
+        """
+        client = Client()
+        client.login(
+            username='test_user',
+            password='qwertyuiop')
+        res = client.post('/file_manager/change_file_permissions/', {})
+        self.assertEqual(res.status_code, 401)
+    
+    def test_change_permissions_bad_params_2(self):
+        """
+        test file_manager.change_file_permissions returns status=401 with bad params
+        """
+        client = Client()
+        client.login(
+            username='test_user',
+            password='qwertyuiop')
+        res = client.post(
+            '/file_manager/change_file_permissions/', 
+            data=json.dumps({'user_list': []}),
+            content_type="application/json")
+        self.assertEqual(res.status_code, 401)
+    
+    def test_change_permissions_bad_file_id(self):
+        """
+        test file_manager.change_file_permissions returns status=401 with bad params
+        """
+        client = Client()
+        client.login(
+            username='test_user',
+            password='qwertyuiop')
+        params = {
+            'user_list': ['baldwin32'],
+            'file': 999
+        }
+        res = client.post(
+            '/file_manager/change_file_permissions/', 
+            data=json.dumps(params),
+            content_type="application/json")
+        self.assertEqual(res.status_code, 401)
+    
+    def test_change_permissions_bad_user(self):
+        """
+        test file_manager.change_file_permissions returns status=401 with bad params
+        """
+        client = Client()
+        client.login(
+            username='test_user',
+            password='qwertyuiop')
+        params = {
+            'user_list': ['baldwin32'],
+            'file': 90
+        }
+        res = client.post(
+            '/file_manager/change_file_permissions/', 
+            data=json.dumps(params),
+            content_type="application/json")
+        self.assertEqual(res.status_code, 403)
+    
+    def test_change_permissions_valid_add_and_remove(self):
+        """
+        test file_manager.change_file_permissions returns status=401 with bad params
+        """
+        client = Client()
+        client.login(
+            username='test_user',
+            password='qwertyuiop')
+        params = {
+            'user_list': ['baldwin32'],
+            'file': 93
+        }
+        res = client.post(
+            '/file_manager/change_file_permissions/', 
+            data=json.dumps(params),
+            content_type="application/json")
+        self.assertEqual(res.status_code, 200)
+
+        res = client.delete(
+            '/file_manager/change_file_permissions/', 
+            data=json.dumps(params),
+            content_type="application/json")
+        self.assertEqual(res.status_code, 200)
