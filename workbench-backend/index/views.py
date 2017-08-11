@@ -96,7 +96,7 @@ def user_register(request):
                     user=username)
                 messages.success(request, message)
         else:
-            return render(request, "register.html", {'error': user_form.errors}, status=422)
+            return render(request, "register.html", {'user_form':user_form, 'error': user_form.errors}, status=422)
     else:
         user_form = UserCreationForm()
 
