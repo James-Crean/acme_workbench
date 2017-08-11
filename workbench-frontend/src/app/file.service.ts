@@ -56,20 +56,20 @@ export class FileService {
     return this.http.delete(this.deleteDatasetUrl + name, options)
       .catch(this.handleError);
   }
-  addFilePermissions(users: string[], csrf: string): Observable<any>{
+  addFilePermissions(users: string[], id: number, csrf: string): Observable<any>{
     console.log(csrf);
     let options = new RequestOptions();
     options.headers = new Headers({'X-CSRFToken': csrf});
-    let body = {'usernames': users};
+    let body = {'user_list': users, "file": id};
     console.log(body)
     return this.http.post(this.changeFilePermissionsUrl, body, options)
       .catch(this.handleError);
   }
-  removeFilePermissions(users: string[], csrf: string): Observable<any>{
+  removeFilePermissions(users: string[], id: number, csrf: string): Observable<any>{
     console.log(csrf);
     let options = new RequestOptions();
     options.headers = new Headers({'Content-Type': 'application/json', 'X-CSRFToken': csrf});
-    options.body = {'usernames': users}
+    options.body = {'user_list': users, "file": id}
     return this.http.delete(this.changeFilePermissionsUrl, options)
       .catch(this.handleError);
   }

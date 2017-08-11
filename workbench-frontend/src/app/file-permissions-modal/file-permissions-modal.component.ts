@@ -18,10 +18,19 @@ export class FilePermissionsModalComponent {
   modalActions = new EventEmitter<string|MaterializeAction>();
   user_list: string[];
   errorMessage: any;
-  datafile: DataFile; 
+  datafile: DataFile;
   addSelectedUsers: string[];
   removeSelectedUsers: string[];
-  constructor(private fileService: FileService, private toastService: ToastService, private cookieService: CookieService,) { }
+  constructor(private fileService: FileService, private toastService: ToastService, private cookieService: CookieService,) {
+    this.datafile = new DataFile({
+      id: 0,
+      path: "",
+      display_name: "",
+      owner: "",
+      allowed_access: [""],
+      data_type: 0,
+    })
+   }
 
   openModal(datafile: DataFile){ 
     this.fileService.getUserList()
@@ -37,7 +46,7 @@ export class FilePermissionsModalComponent {
         this.errorMessage = <any>error;
       }
     );
-    this.datafile = datafile; 
+    this.datafile = datafile;
     this.modalActions.emit({action:"modal",params:['open']});
   }
 
@@ -47,7 +56,7 @@ export class FilePermissionsModalComponent {
 
   addPermissions(){
     let csrf = this.cookieService.get('csrftoken');
-    this.fileService.addFilePermissions(this.addSelectedUsers, csrf)
+    this.fileService.addFilePermissions(this.addSelectedUsers, this.datafile.id, csrf)
       .subscribe(
         success => {
           console.log('Add permissions success');
@@ -62,7 +71,7 @@ export class FilePermissionsModalComponent {
 
   removePermissions(){
     let csrf = this.cookieService.get('csrftoken');
-    this.fileService.removeFilePermissions(this.removeSelectedUsers, csrf)
+    this.fileService.removeFilePermissions(this.removeSelectedUsers, this.datafile.id, csrf)
       .subscribe(
         success => {
           console.log('remove permissions success');
@@ -74,4 +83,7 @@ export class FilePermissionsModalComponent {
         }
       );
   }
+    onCountChange($event){
+      console.log("change");
+    }
 }

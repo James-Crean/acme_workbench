@@ -3,8 +3,9 @@
     <div class="card grey lighten-4">
       <div class="card-content teal-text text-darken-1">
         <span class="card-title">Add Permissions</span>
-        <select id="permission-modal-add" multiple materialize="material_select" [materializeSelectOptions]="user_list" [(ngModel)]="addSelectedUsers">
-          <option *ngFor="let user of user_list" [value]="user.username">{{user.username}}</option>
+        <select multiple id="permission-modal-add" materialize="material_select" [materializeSelectOptions]="user_list" [(ngModel)]="addSelectedUsers" (ngModelChange)="onCountChange($event)">
+          <option value="" disabled selected>Select users</option>
+          <option *ngFor="let user of user_list" [value]="user">{{user}}</option>
         </select>
         <button class="waves-effect waves-green btn" (click)=addPermissions()>Add Selected</button>
       </div>
@@ -12,8 +13,9 @@
     <div class="card grey lighten-4">
       <div class="card-content red-text text-darken-3">
         <span class="card-title">Remove Permissions</span>
-        <select multiple materialize="material_select" [materializeSelectOptions]="allowed_users" [(ngModel)]="removeSelectedUsers">
-          <option *ngFor="let user of allowed_users" [value]="user">{{user}}</option>
+        <select  multiple materialize="material_select" [materializeSelectOptions]="datafile.allowed_access" [(ngModel)]="removeSelectedUsers">
+          <option value="" disabled selected>Select Users</option>
+          <option *ngFor="let user of datafile.allowed_access" [value]="user">{{user}}</option>
         </select>
         <button class="waves-effect waves-red btn red" (click)="removePermissions()">Remove Selected</button>
       </div>
