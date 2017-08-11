@@ -18,6 +18,7 @@ export class DatasetViewComponent implements OnInit {
   private filePermissionsModal: FilePermissionsModalComponent;
   file_list: Object[];
   fileInfoList: DataFile[];
+  currentFileIndex: number;
   errorMessage: string;
   @Input() dataset: any;
   @Output() showDatasetCollection: EventEmitter<string> = new EventEmitter<string>();
@@ -41,7 +42,7 @@ export class DatasetViewComponent implements OnInit {
           display_name: <string>file.display_name,
           owner: <string>file.owner,
           allowed_access: <string[]>file.allowed_access,
-          data_type: <number>file.data_type              
+          data_type: <number>file.data_type
         });
         this.fileInfoList[i] = newFile;
       },
@@ -55,6 +56,26 @@ export class DatasetViewComponent implements OnInit {
   }
 
   openModal(index: number){
+    this.currentFileIndex = index; 
     this.filePermissionsModal.openModal(this.fileInfoList[index]);
+  }
+
+  updatePermissions($event){
+    console.log($event);
+    this.fileService.getFileInfo($event, this.dataset.name).subscribe(
+      file => {
+        let newFile = new DataFile({
+          id: <number>file.id, 
+          path: <string>file.path,
+          display_name: <string>file.display_name,
+          owner: <string>file.owner,
+          allowed_access: <string[]>file.allowed_access,
+          data_type: <number>file.data_type
+        });
+        this.fileInfoList[this.currentFileIndex] = newFile;
+      },
+      error => {
+        this.errorMessage = <any>error;
+      });
   }
 }

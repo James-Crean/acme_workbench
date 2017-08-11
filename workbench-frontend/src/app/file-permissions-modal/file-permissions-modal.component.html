@@ -3,7 +3,7 @@
     <div class="card grey lighten-4">
       <div class="card-content teal-text text-darken-1">
         <span class="card-title">Add Permissions</span>
-        <select multiple id="permission-modal-add" materialize="material_select" [materializeSelectOptions]="user_list" [(ngModel)]="addSelectedUsers" (ngModelChange)="onCountChange($event)">
+        <select multiple id="permission-modal-add" materialize="material_select" [materializeSelectOptions]="user_list" [(ngModel)]="addSelectedUsers">
           <option value="" disabled selected>Select users</option>
           <option *ngFor="let user of user_list" [value]="user">{{user}}</option>
         </select>

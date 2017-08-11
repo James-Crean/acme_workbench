@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, ViewChild, ElementRef, Renderer2 } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { MaterializeAction } from 'angular2-materialize';
 import { CookieService } from 'ngx-cookie';
 
@@ -15,6 +15,7 @@ import { DataFile } from '../data-file'
 })
 export class FilePermissionsModalComponent {
 
+  @Output() updatePermissions: EventEmitter<string> = new EventEmitter<string>();
   modalActions = new EventEmitter<string|MaterializeAction>();
   user_list: string[];
   errorMessage: any;
@@ -59,8 +60,8 @@ export class FilePermissionsModalComponent {
     this.fileService.addFilePermissions(this.addSelectedUsers, this.datafile.id, csrf)
       .subscribe(
         success => {
-          console.log('Add permissions success');
           this.toastService.toast('Permissions successfully added');
+          this.updatePermissions.emit(this.datafile.display_name);
         },
         error => {
           this.errorMessage = <any>error;
@@ -74,8 +75,8 @@ export class FilePermissionsModalComponent {
     this.fileService.removeFilePermissions(this.removeSelectedUsers, this.datafile.id, csrf)
       .subscribe(
         success => {
-          console.log('remove permissions success');
           this.toastService.toast('Permissions successfully removed');
+          this.updatePermissions.emit(this.datafile.display_name);
         },
         error => {
           this.errorMessage = <any>error;
@@ -83,7 +84,4 @@ export class FilePermissionsModalComponent {
         }
       );
   }
-    onCountChange($event){
-      console.log("change");
-    }
 }
