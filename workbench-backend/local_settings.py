@@ -10,4 +10,4 @@ import os
 if os.environ.get('TRAVIS') == 'true':
     userdata_storage_path = '.'
 else:
-    userdata_storage_path = '/Users/baldwin32/projects/acme_workbench/userdata/'
+    userdata_storage_path = '/Users/' + os.environ['USER'] + '/projects/acme_workbench/userdata/'

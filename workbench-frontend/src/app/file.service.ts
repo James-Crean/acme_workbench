@@ -57,7 +57,6 @@ export class FileService {
       .catch(this.handleError);
   }
   addFilePermissions(users: string[], id: number, csrf: string): Observable<any>{
-    console.log(csrf);
     let options = new RequestOptions();
     options.headers = new Headers({'X-CSRFToken': csrf});
     let body = {'user_list': users, "file": id};
@@ -66,7 +65,6 @@ export class FileService {
       .catch(this.handleError);
   }
   removeFilePermissions(users: string[], id: number, csrf: string): Observable<any>{
-    console.log(csrf);
     let options = new RequestOptions();
     options.headers = new Headers({'Content-Type': 'application/json', 'X-CSRFToken': csrf});
     options.body = {'user_list': users, "file": id}

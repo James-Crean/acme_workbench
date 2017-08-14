@@ -48,11 +48,11 @@ export class FilePermissionsModalComponent {
       }
     );
     this.datafile = datafile;
-    this.modalActions.emit({action:"modal",params:['open']});
+    this.modalActions.emit({action:"modal", params:['open', { dismissible: true }]});
   }
 
   closeModal() {
-    this.modalActions.emit({action:"modal",params:['close']});
+    this.modalActions.emit({action:"modal", params:['close']});
   }
 
   addPermissions(){

@@ -53,7 +53,6 @@ export class DataManagerComponent implements OnInit {
             allowed_access: <string[]>item.allowed_access
           }));
         } 
-        console.log(this.datasets);
       },
       error => {
         this.errorMessage = <any>error;
