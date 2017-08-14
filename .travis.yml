@@ -3,7 +3,8 @@ sudo: false
 dist: trusty
 python:
   - 2.7
-
+notifications:
+  slack: acmeclimate:LUHYbmd1s5iWBMGakOEweeB1
 env:
   - DJANGO=1.10.5
 
@@ -26,8 +27,7 @@ install:
 #  - npm install workbench-frontend/package.json
 
 script:
-  - python manage.py test
-  - coverage run manage.py test
+  - coverage run --omit=*/migrations/*,*/templatetags/*,workbench/*,manage.py,*/tests.py,*/admin.py,*/__init__.py manage.py test
 
 after_success:
   - coveralls

@@ -1,0 +1,41 @@
+
+<div class="card grey lighten-4">
+  <div class="card-content teal-text text-darken-1">
+    <div (click)="go_back()" class="scale-transition waves-effect waves-light btn"><i class="material-icons left">arrow_back</i>Back</div>
+    <br>
+    <div class="pad-left">
+      <span class="card-title">
+        {{ dataset.name }}
+      </span>
+    </div>
+    <ul materialize="collapsible" class="collapsible" data-collapsible="accordian">
+      <li *ngFor="let filename of dataset.file_list; let i = index">
+        <div class="collapsible-header"
+          (click)="getFileInfo(i)">
+          {{ filename }}
+        </div>
+        <div class="collapsible-body">
+          <ul class="collection" *ngIf="fileInfoList[i]">
+            <li class="collection-item teal-text darken-1" style="padding-left: 2em">
+              path: {{ fileInfoList[i].path }}
+            </li>
+            <li class="collection-item teal-text darken-1" style="padding-left: 2em">
+              name: {{ fileInfoList[i].display_name }}
+            </li>
+            <li class="collection-item teal-text darken-1" style="padding-left: 2em">
+              owner: {{ fileInfoList[i].owner }}
+            </li>
+            <li class="collection-item teal-text darken-1" style="padding-left: 2em">
+              access: <span *ngFor="let j of fileInfoList[i].allowed_access"> {{ j }} </span>
+              <a (click)="openModal(i)" href="#modal1" class="waves-effect waves-light btn btn-small modal-trigger"><i class="material-icons">add</i></a>
+            </li>
+          </ul>
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<div>
+  <file-permissions-modal (updatePermissions)="updatePermissions($event)"></file-permissions-modal>
+</div>

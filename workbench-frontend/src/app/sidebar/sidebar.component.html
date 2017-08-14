@@ -2,10 +2,12 @@
   <a *ngFor="let element of elements"  
      href="#" 
      class="w3-bar-item">
-    <p class="waves-effect waves-light btn  teal darken-1"
-       id="sidebar-{{element.id}}" 
-       style="width: 100%; text-align: left; padding-left: 15px;"
-       (click)="change_active($event)"> 
+    <p
+      class="waves-effect waves-light btn teal darken-1"
+      [ngClass]="{'btn-flat': isActive(element.id)}"
+      id="sidebar-{{element.id}}" 
+      style="width: 100%; text-align: left; padding-left: 15px;"
+      (click)="change_active($event, element.id)"> 
       {{ element.display }} 
     </p>
   </a>

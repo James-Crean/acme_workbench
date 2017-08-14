@@ -48,6 +48,7 @@ class DataFile(BaseModel):
         Dump contents to dict
         """
         return {
+            'id': self.id,
             'path': self.path,
             'display_name': self.display_name,
             'owner': self.owner.username,
@@ -64,14 +65,17 @@ class DataSet(BaseModel):
     allowed_access = models.ManyToManyField(User, related_name='data_set_allowed_access_users')
     file_list = models.ManyToManyField(DataFile, related_name='data_set_contents')
     metadata = models.CharField(max_length=1023)
+    owner = models.ForeignKey(User, related_name='dataset_owner')
 
     def toDict(self):
         """
         Dump contents to a dict
         """
         return {
+            'id': self.id,
             'name': self.name,
             'metadata': self.metadata,
             'allowed_access': [user.username for user in self.allowed_access.all()],
-            'file_list': [file.display_name for file in self.file_list.all()]
+            'file_list': [file.display_name for file in self.file_list.all()],
+            'owner': str(self.owner)
         }

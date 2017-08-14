@@ -1,0 +1,27 @@
+.collapsible-body{
+    padding-left: 1em;
+}
+.pad-left {
+    padding-left: 1.3em;
+}
+
+.btn-small{
+    height: 24px;
+    line-height: 24px;
+    padding: 0 0.3em;
+    margin-left: 5px;
+}
+
+.fill-modal {
+    display: flex;
+}
+
+.fill-modal .card {
+    flex-direction: column;
+    flex: 1;
+}
+
+.collapsible{
+    overflow-y: scroll;
+    max-height: 65vh;
+}

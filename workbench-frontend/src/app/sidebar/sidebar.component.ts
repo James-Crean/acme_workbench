@@ -7,8 +7,9 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 })
 export class SidebarComponent implements OnInit {
 
-  elements: any;
+  elements: any;  
   active_element: string;
+//------------------------------------------------------------------------------------
   constructor() { }
 
   ngOnInit() {
@@ -39,8 +40,12 @@ export class SidebarComponent implements OnInit {
   @Output()
   change: EventEmitter<string> = new EventEmitter<string>();
   
-  change_active($event){
+  change_active($event, id){
+    this.active_element = id;
     this.change.emit($event);
   }
 
+  isActive(id){
+    return id == this.active_element;
+  }
 }

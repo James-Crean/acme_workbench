@@ -1,0 +1,13 @@
+<div class="card grey lighten-4">
+  <div class="card-content">
+        <span class="card-title teal-text darken-4">Data Sets</span>
+        <ul class="collection">
+            <a href="#!" 
+            class="collection-item teal-text text-darken-1" 
+            *ngFor="let set of datasets; let i = index" 
+            (click)="pick_dataset($event, i)">
+                {{set.name}}
+            </a>
+        </ul>
+    </div>
+</div>
