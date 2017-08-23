@@ -1,8 +1,14 @@
 import json
+import os
+
 from django.test import TestCase
 from django.test import Client
 
-from local_settings import userdata_storage_path
+if os.environ.get('TRAVIS') == 'true':
+    userdata_storage_path = '.'
+else:
+    userdata_storage_path = '/Users/' + os.environ['USER'] + '/projects/acme_workbench/userdata/'
+
 
 class FileManagerViewTests(TestCase):
     """
