@@ -4,6 +4,9 @@ import { FileUploader } from 'ng2-file-upload';
 
 import { FileService } from '../file.service'
 import { ToastService } from '../toast.service'
+import { CookieService } from 'ngx-cookie';
+
+
 @Component({
   selector: 'data-manager',
   templateUrl: './data-manager.component.html',
@@ -30,11 +33,13 @@ export class DataManagerComponent implements OnInit {
   private uploader = new FileUploader({});
   constructor(
     private fileService: FileService,
-    private toastService: ToastService) { }
+    private toastService: ToastService,
+    private cookieService: CookieService) { }
 
   ngOnInit() {
     this.update();
     this.uploader.onCompleteAll = this.onComplete;
+    console.log('globus_is_authenticated', this.cookieService.get('globus_is_authenticated'))
   }
   onComplete(){
     let self = <any>this;

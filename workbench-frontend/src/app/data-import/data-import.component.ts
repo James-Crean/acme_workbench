@@ -52,7 +52,6 @@ export class DataImportComponent implements OnInit {
         newName = this.datasetName;
       }
       this.errorMessage = undefined;
-      console.log(this.uploader.options)
       let targetUrl = this.datasetUploadUrl + newName;
       this.uploader.getNotUploadedItems().map(item => item.url = targetUrl);
       this.back();

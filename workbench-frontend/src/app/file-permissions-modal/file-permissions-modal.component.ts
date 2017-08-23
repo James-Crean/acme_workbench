@@ -1,9 +1,10 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { MaterializeAction } from 'angular2-materialize';
-import { CookieService } from 'ngx-cookie';
 
-import { FileService } from '../file.service'
-import { ToastService } from '../toast.service'
+import { CookieService } from 'ngx-cookie';
+import { FileService } from '../file.service';
+import { ToastService } from '../toast.service';
+
 import { DataFile } from '../data-file'
 
 
@@ -22,7 +23,9 @@ export class FilePermissionsModalComponent {
   datafile: DataFile;
   addSelectedUsers: string[];
   removeSelectedUsers: string[];
-  constructor(private fileService: FileService, private toastService: ToastService, private cookieService: CookieService,) {
+  constructor(private fileService: FileService, 
+              private toastService: ToastService, 
+              private cookieService: CookieService,) {
     this.datafile = new DataFile({
       id: 0,
       path: "",
