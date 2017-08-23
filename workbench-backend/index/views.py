@@ -9,16 +9,49 @@ from django.contrib.auth.models import Group, User
 from index.forms import UserCreationForm
 from django.views.decorators.csrf import csrf_protect
 from django.core.exceptions import ObjectDoesNotExist
+from django.conf import settings
 
+from requests_oauthlib import OAuth2Session
+from OpenSSL import crypto
+
+from local_settings import certificate_url, client_id, secret, redirect_url, authorize_url, token_url, globus_client_id
 
 def index(request):
     return render(request, 'index.html')
-
+ 
 def workbench(request):
     if request.user.is_authenticated():
         return render(request, 'workbench.html')
     else:
         return redirect('login/', status=302)
+
+def get_token(request):
+    scope = [certificate_url]
+
+    if 'oauth_state' in request.session:
+        del request.session['oauth_state']
+    slcs = OAuth2Session(
+        client_id=client_id,
+        redirect_uri=redirect_url,
+        scope=scope)
+    auth_url, state = slcs.authorization_url(authorize_url)
+    request.session['oauth_state'] = state
+    return redirect(auth_url)
+
+def oauth_callback(request):
+    if 'oauth_state' not in request.session:
+        return redirect('get_token')
+    slcs = OAuth2Session(
+        client_id=client_id,
+        redirect_uri=redirect_url,
+        state=request.session.pop('oauth_state'))
+    token = slcs.fetch_token(
+        token_url,
+        client_secret=secret,
+        authorization_response=request.url,
+        verify = False)
+    request.session['oauth_token'] = token
+    return redirect('workbench')
 
 # Login
 @csrf_protect

@@ -3,10 +3,18 @@ import os
 from shutil import rmtree
 
 from django.http import HttpResponse
-from django.contrib.auth.models import User
-from .models import DataFile, DataSet, DataType
+from django.shortcuts import redirect, render
 from django.views.decorators.csrf import csrf_exempt
-from local_settings import userdata_storage_path
+from django.contrib.auth.models import User
+from .models import DataFile, DataSet, DataType, GlobusAuth, GlobusNode
+
+from globus_sdk import ConfidentialAppAuthClient
+from local_settings import globus_client_id, globus_client_secret, globus_redirect_url
+
+if os.environ.get('TRAVIS') == 'true':
+    userdata_storage_path = '.'
+else:
+    userdata_storage_path = '/Users/' + os.environ['USER'] + '/projects/acme_workbench/userdata/'
 
 def get_data_set_list(request):
     """
@@ -26,6 +34,40 @@ def get_data_set_list(request):
     data_sets = [{k: v for k,v in data_set.toDict().items()} for data_set in DataSet.objects.filter(allowed_access=site_user.id)]
     response = json.dumps(data_sets)
     return HttpResponse(response)
+
+def globus_auth(request, **kwargs):
+    """
+    Start the globus authentication process
+    """
+    client = ConfidentialAppAuthClient(
+        client_id=globus_client_id,
+        client_secret=globus_client_secret)
+    print globus_redirect_url
+    client.oauth2_start_flow(
+        redirect_uri=globus_redirect_url)
+
+    code = request.GET.get('code')
+    if not code:
+        auth_uri = client.oauth2_get_authorize_url()
+        return redirect(auth_uri)
+    
+    tokens = client.oauth2_exchange_code_for_tokens(code)
+    tokens = tokens.by_resource_server
+    request.session['globus_token'] = tokens
+    user = User.objects.get(username=request.user)
+    try:
+        auth_token = GlobusAuth.objects.get(owner=user)
+    except:
+        auth_token = GlobusAuth(
+            auth_token=tokens['auth.globus.org']['access_token'],
+            transfer_token=tokens['transfer.api.globus.org']['access_token'],
+            owner=user)
+    else:
+        auth_token.auth_token = tokens['auth.globus.org']['access_token']
+        auth_token.transfer_token = tokens['transfer.api.globus.org']['access_token']
+    finally:
+        auth_token.save()
+    return render(request, 'workbench.html')
 
 def get_data_set(request):
     """

@@ -79,3 +79,30 @@ class DataSet(BaseModel):
             'file_list': [file.display_name for file in self.file_list.all()],
             'owner': str(self.owner)
         }
+
+
+class GlobusNode(models.Model):
+    """
+    A class to hold globus node information
+    """
+    uuid = models.CharField(max_length=255)
+    name = models.CharField(max_length=255)
+    user_list = models.ManyToManyField(User, related_name='globus_node_user_list')
+
+    def toDict(self):
+        """
+        Returns node info, no need to have user_list
+        """
+        return {
+            'name': self.name,
+            'uuid': self.uuid,
+        }
+
+class GlobusAuth(models.Model):
+    """
+    Stores globus authentication credentials
+    """
+    auth_token = models.CharField(max_length=255)
+    transfer_token = models.CharField(max_length=255)
+    refresh_token = models.CharField(max_length=255)
+    owner = models.ForeignKey(User, related_name='globus_token_owner')
