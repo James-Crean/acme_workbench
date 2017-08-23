@@ -21,16 +21,23 @@ from file_manager import views as file_manager_views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+
+    # Index views
     url(r'^$', index_views.index, name='index'),
     url(r'^login/?$', index_views.user_login, name='login'),
     url(r'^logout/?$', index_views.user_logout, name='logout'),
     url(r'^register/?$', index_views.user_register, name='register'),
     url(r'^workbench/?$', index_views.workbench, name='workbench'),
     url(r'^get_user_list/?$', index_views.get_user_list, name='getUserList'),
+    url(r'^get_token/$', index_views.get_token, name='getToken'),
+
+    # File manager views
     url(r'^file_manager/get_data_set_list/?$', file_manager_views.get_data_set_list, name='getDataSetList'),
     url(r'^file_manager/get_data_set/?$', file_manager_views.get_data_set, name='getDataSet'),
     url(r'^file_manager/get_file_info/?$', file_manager_views.get_file_info, name='getFileInfo'),
     url(r'^file_manager/upload_dataset/(?P<dataset_name>.+)$', file_manager_views.upload_dataset, name='uploadDataSet'),
     url(r'^file_manager/delete_dataset/(?P<dataset_name>.+)$', file_manager_views.delete_dataset, name='deleteDataSet'),
-    url(r'^file_manager/change_file_permissions/?$', file_manager_views.change_file_permissions, name='changeFilePermissions')
+    url(r'^file_manager/change_file_permissions/?$', file_manager_views.change_file_permissions, name='changeFilePermissions'),
+    url(r'^file_manager/globus_auth/?$', file_manager_views.globus_auth, name="globusAuth"),
+    url(r'^file_manager/globus_auth/(?P<state>\w+)/(?P<code>\w+)/$', file_manager_views.globus_auth, name='globusAuthCallback')
 ]
