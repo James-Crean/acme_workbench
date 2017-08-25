@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { ViewChild } from '@angular/core';
 
+import { ContextMenuModule, ContextMenuComponent, ContextMenuService } from 'ngx-contextmenu'
 
 import { FilePermissionsModalComponent } from '../file-permissions-modal/file-permissions-modal.component' 
 import { FileService } from '../file.service'
@@ -15,15 +16,17 @@ import { DataFile } from '../data-file'
 export class DatasetViewComponent implements OnInit {
 
   @ViewChild(FilePermissionsModalComponent)
+  @ViewChild('fileMenu') public fileMenu: ContextMenuComponent;
   private filePermissionsModal: FilePermissionsModalComponent;
   file_list: Object[];
   fileInfoList: DataFile[];
   currentFileIndex: number;
   errorMessage: string;
+  @Input() contextMenu: ContextMenuComponent;
   @Input() dataset: any;
   @Output() showDatasetCollection: EventEmitter<string> = new EventEmitter<string>();
 
-  constructor(private fileService: FileService) { }
+  constructor(private fileService: FileService, private contextMenuService: ContextMenuService) { }
 
   ngOnInit() {
     this.fileInfoList = new Array(this.dataset.file_list.length);
@@ -77,5 +80,20 @@ export class DatasetViewComponent implements OnInit {
       error => {
         this.errorMessage = <any>error;
       });
+  }
+
+  public openMenu($event: MouseEvent, item: any): void {
+    console.log(this.fileMenu)
+    this.contextMenuService.show.next({
+      contextMenu: this.fileMenu,
+      event: $event,
+      item: item,
+    });
+    $event.preventDefault();
+    $event.stopPropagation();
+  }
+  
+  sendToVis(i: any){
+    console.log(i)
   }
 }

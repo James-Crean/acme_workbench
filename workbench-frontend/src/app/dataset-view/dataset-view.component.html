@@ -11,8 +11,11 @@
     <ul materialize="collapsible" class="collapsible" data-collapsible="accordian">
       <li *ngFor="let filename of dataset.file_list; let i = index">
         <div class="collapsible-header"
-          (click)="getFileInfo(i)">
+        (click)="getFileInfo(i)">
           {{ filename }}
+          <a [contextMenu]="fileMenu" [contextMenuSubject]="i" (click)="openMenu($event, i)">
+            <i class="material-icons context-menu">more_vert</i>
+          </a>
         </div>
         <div class="collapsible-body">
           <ul class="collection" *ngIf="fileInfoList[i]">
@@ -39,3 +42,10 @@
 <div>
   <file-permissions-modal (updatePermissions)="updatePermissions($event)"></file-permissions-modal>
 </div>
+
+
+<context-menu #fileMenu>
+  <ng-template contextMenuItem (execute)="sendToVis($event.item)">Send to Visualizations</ng-template>
+</context-menu>
+
+  

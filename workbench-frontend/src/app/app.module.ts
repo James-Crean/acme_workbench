@@ -6,6 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { MaterializeModule } from "angular2-materialize";
 import { FileDropDirective, FileSelectDirective } from 'ng2-file-upload';
 import { CookieModule } from 'ngx-cookie';
+import { ContextMenuModule } from 'ngx-contextmenu'
 
 import { AppComponent } from './app.component';
 import { DataManagerComponent } from './data-manager/data-manager.component';
@@ -44,7 +45,8 @@ import { VisSidebarComponent } from './vis-sidebar/vis-sidebar.component';
     MaterializeModule,
     HttpModule,
     FormsModule,
-    CookieModule.forRoot()
+    CookieModule.forRoot(),
+    ContextMenuModule
   ],
   providers: [],
   bootstrap: [AppComponent]
