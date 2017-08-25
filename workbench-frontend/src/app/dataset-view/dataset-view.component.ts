@@ -4,13 +4,14 @@ import {MaterializeDirective, MaterializeAction} from "angular2-materialize";
 
 import { FilePermissionsModalComponent } from '../file-permissions-modal/file-permissions-modal.component' 
 import { FileService } from '../file.service'
+import { ToastService } from '../toast.service'
 import { DataFile } from '../data-file'
 
 @Component({
   selector: 'dataset-view',
   templateUrl: './dataset-view.component.html',
   styleUrls: ['./dataset-view.component.css'],
-  providers: [FileService]  
+  providers: [FileService, ToastService]  
 })
 export class DatasetViewComponent implements OnInit {
 
@@ -25,7 +26,7 @@ export class DatasetViewComponent implements OnInit {
   dropdownActions = new EventEmitter<string|MaterializeAction>();
   currentDropdownIndex: number;
 
-  constructor(private fileService: FileService) { }
+  constructor(private fileService: FileService, private toastService: ToastService) { }
 
   ngOnInit() {
     this.fileInfoList = new Array(this.dataset.file_list.length);
@@ -101,6 +102,7 @@ export class DatasetViewComponent implements OnInit {
     }
     if(this.fileInfoList[this.currentDropdownIndex]){ //4 
       console.log("Content is loaded. free to send");
+      this.toastService.toast("File sent to Visualizations")
     }
     else{ //5 
       console.log("no data yet, fetching....")
