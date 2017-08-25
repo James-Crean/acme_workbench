@@ -13,9 +13,17 @@
         <div class="collapsible-header"
         (click)="getFileInfo(i)">
           {{ filename }}
-          <a [contextMenu]="fileMenu" [contextMenuSubject]="i" (click)="openMenu($event, i)">
-            <i class="material-icons context-menu">more_vert</i>
+          <a class="dropdown-button"
+            href='#'
+            materialize="dropdown"
+            [materializeParams]="[{constrainWidth: false, stopPropagation: true}]"
+            [materializeActions]="dropdownActions"
+            data-activates='dropdown'>
+            <i class="material-icons context-menu" (click)="setIndex(i)">more_vert</i>
           </a>
+          <ul id='dropdown' class='dropdown-content'>
+            <li (click)="sendToVis($event)"><a href="#!">Send to Visualization</a></li>
+          </ul>
         </div>
         <div class="collapsible-body">
           <ul class="collection" *ngIf="fileInfoList[i]">
@@ -43,9 +51,5 @@
   <file-permissions-modal (updatePermissions)="updatePermissions($event)"></file-permissions-modal>
 </div>
 
-
-<context-menu #fileMenu>
-  <ng-template contextMenuItem (execute)="sendToVis($event.item)">Send to Visualizations</ng-template>
-</context-menu>
 
   
