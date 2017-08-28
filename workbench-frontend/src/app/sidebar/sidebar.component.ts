@@ -9,7 +9,6 @@ export class SidebarComponent implements OnInit {
 
   elements: any;  
   active_element: string;
-//------------------------------------------------------------------------------------
   constructor() { }
 
   ngOnInit() {

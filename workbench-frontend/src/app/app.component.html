@@ -1,4 +1,6 @@
-<workbench-sidebar class="" (change)="change_active($event)"></workbench-sidebar>
+<workbench-sidebar *ngIf="active_component != 'sidebar-Visualizations'; else vis" class="" (change)="change_active($event)"></workbench-sidebar>
+<ng-template #vis><vis-sidebar (exitVis)="exit_vis($event)"></vis-sidebar></ng-template>
+
 <div style="margin-left: 15em;" id="workbench-content">
   <run-manager *ngIf="active_component == 'sidebar-RunManager'"></run-manager>
   <data-manager *ngIf="active_component == 'sidebar-DataManager'"></data-manager>

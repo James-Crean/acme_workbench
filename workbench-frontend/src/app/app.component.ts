@@ -12,4 +12,8 @@ export class AppComponent {
   change_active($event){
     this.active_component = $event.target.id;
   }
+
+  exit_vis($event){
+    this.active_component = undefined;
+  }
 }

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject'
 
 @Injectable()
-export class VisServiceService {
+export class VisService {
 
   private images$ = new BehaviorSubject([])
 

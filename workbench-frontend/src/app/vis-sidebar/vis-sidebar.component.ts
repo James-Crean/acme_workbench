@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'vis-sidebar',
@@ -7,9 +7,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class VisSidebarComponent implements OnInit {
 
+  elements = [];
+  @Output()
+  exitVis:EventEmitter<void> = new EventEmitter<void>();
   constructor() { }
 
   ngOnInit() {
+  }
+
+  goBack(){
+    this.exitVis.emit()
   }
 
 }
