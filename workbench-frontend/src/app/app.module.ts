@@ -20,6 +20,7 @@ import { DataImportComponent } from './data-import/data-import.component';
 import { DatasetDeleteComponent } from './dataset-delete/dataset-delete.component';
 import { FilePermissionsModalComponent } from './file-permissions-modal/file-permissions-modal.component';
 import { VisSidebarComponent } from './vis-sidebar/vis-sidebar.component';
+import { VisService } from './vis.service'
 
 @NgModule({
   declarations: [
@@ -46,7 +47,7 @@ import { VisSidebarComponent } from './vis-sidebar/vis-sidebar.component';
     FormsModule,
     CookieModule.forRoot(),
   ],
-  providers: [],
+  providers: [VisService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject'
+import { DataFile } from './data-file'
 
 @Injectable()
 export class VisService {
@@ -8,9 +9,10 @@ export class VisService {
 
   constructor() { }
 
-  addImage(fileName: string){
-    console.log(fileName)
-    let images = [ ...this.images$.getValue(), fileName]; 
+  addImage(file: DataFile){
+    console.log("Service adding: ", file)
+    let images = [ ...this.images$.getValue(), file]; 
+    console.log(images);
     this.images$.next(images);
   }
 

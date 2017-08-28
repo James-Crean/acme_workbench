@@ -1,15 +1,15 @@
 import { TestBed, inject } from '@angular/core/testing';
 
-import { VisServiceService } from './vis-service.service';
+import { VisService } from './vis.service';
 
 describe('VisServiceService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [VisServiceService]
+      providers: [VisService]
     });
   });
 
-  it('should be created', inject([VisServiceService], (service: VisServiceService) => {
+  it('should be created', inject([VisService], (service: VisService) => {
     expect(service).toBeTruthy();
   }));
 });

@@ -1,4 +1,7 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Subscription } from 'rxjs/Subscription'
+import { VisService } from '../vis.service'
+import { DataFile } from '../data-file'
 
 @Component({
   selector: 'vis-sidebar',
@@ -7,16 +10,27 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 })
 export class VisSidebarComponent implements OnInit {
 
-  elements = [];
+  fileList: DataFile[];
   @Output()
   exitVis:EventEmitter<void> = new EventEmitter<void>();
-  constructor() { }
+  subscription: Subscription;
+  constructor(private visService: VisService) {
+    this.subscription = this.visService.getImages()
+    .subscribe(
+      updatedList => {
+        this.fileList = updatedList;
+      },
+      error => console.log(error));
+   }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   goBack(){
     this.exitVis.emit()
+  }
+
+  change_active($event, id){
+    console.log("Change active: ", id)
   }
 
 }

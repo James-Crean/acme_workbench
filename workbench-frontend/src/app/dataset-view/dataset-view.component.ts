@@ -5,6 +5,7 @@ import {MaterializeDirective, MaterializeAction} from "angular2-materialize";
 import { FilePermissionsModalComponent } from '../file-permissions-modal/file-permissions-modal.component' 
 import { FileService } from '../file.service'
 import { ToastService } from '../toast.service'
+import { VisService } from '../vis.service'
 import { DataFile } from '../data-file'
 
 @Component({
@@ -26,7 +27,7 @@ export class DatasetViewComponent implements OnInit {
   dropdownActions = new EventEmitter<string|MaterializeAction>();
   currentDropdownIndex: number;
 
-  constructor(private fileService: FileService, private toastService: ToastService) { }
+  constructor(private fileService: FileService, private toastService: ToastService, private visService: VisService) { }
 
   ngOnInit() {
     this.fileInfoList = new Array(this.dataset.file_list.length);
@@ -67,7 +68,6 @@ export class DatasetViewComponent implements OnInit {
   }
 
   updatePermissions($event){
-    console.log($event);
     this.fileService.getFileInfo($event, this.dataset.name).subscribe(
       file => {
         let newFile = new DataFile({
@@ -86,7 +86,6 @@ export class DatasetViewComponent implements OnInit {
   }
 
   setIndex(i: number){
-    console.log("preparing index: ", i);
     this.currentDropdownIndex = i;
   }
   
@@ -101,11 +100,10 @@ export class DatasetViewComponent implements OnInit {
       this.dropdownActions.emit({action:"dropdown", params:['close']}); //3
     }
     if(this.fileInfoList[this.currentDropdownIndex]){ //4 
-      console.log("Content is loaded. free to send");
+      this.visService.addImage(this.fileInfoList[this.currentDropdownIndex]);
       this.toastService.toast("File sent to Visualizations")
     }
     else{ //5 
-      console.log("no data yet, fetching....")
       this.getFileInfo(this.currentDropdownIndex, this.sendToVis.bind(this))
     }
   }
