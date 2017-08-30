@@ -1,5 +1,6 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription'
+
 import { VisService } from '../vis.service'
 import { DataFile } from '../data-file'
 
@@ -29,8 +30,8 @@ export class VisSidebarComponent implements OnInit {
     this.exitVis.emit()
   }
 
-  change_active($event, id){
-    console.log("Change active: ", id)
+  change_active($event, file){
+    this.visService.selectImage(file.path.split("userdata/")[1])
   }
 
 }

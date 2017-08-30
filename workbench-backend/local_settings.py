@@ -11,3 +11,10 @@ if os.environ.get('TRAVIS') == 'true':
     userdata_storage_path = '.'
 else:
     userdata_storage_path = '/Users/' + os.environ['USER'] + '/projects/acme_workbench/userdata/'
+
+
+#Media files are used by the visualization component to show user images.
+#If we want authentication these settings may need to change
+MEDIA_URL = 'media/'
+
+MEDIA_ROOT = userdata_storage_path

@@ -4,12 +4,14 @@
         <div class="row">
             <div class="col s12">
                 <ul class="tabs" materialize="tabs">
-                    <li class="tab col s6"><a target ="" href="#test1">Test 1</a></li>
-                    <li class="tab col s6"><a class="" href="#test2">Test 2</a></li>
+                    <li class="tab col s6" (click)="selectTab(0)"><a target ="" href="#test1">Test 1</a></li>
+                    <li class="tab col s6" (click)="selectTab(1)"><a class="" href="#test2">Test 2</a></li>
                 </ul>
             </div>
             <span id="test1"></span> <!--Empty spans so materialize can target something-->
             <span id="test2"></span>
+            <img *ngIf="imagesDisplayed[0]" src="/media/{{imagesDisplayed[0]}}" id="left-image"/>
+            <img *ngIf="imagesDisplayed[1]" src="/media/{{imagesDisplayed[1]}}" id="right-image"/>
         </div>
     </div>
 </div>

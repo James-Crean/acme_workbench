@@ -1,11 +1,13 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject'
+import { Subject } from 'rxjs/Subject'
 import { DataFile } from './data-file'
 
 @Injectable()
 export class VisService {
 
-  private images$ = new BehaviorSubject([])
+  private images$ = new BehaviorSubject([]);
+  private selectedImage$ = new Subject<string>();
 
   constructor() { }
 
@@ -23,5 +25,14 @@ export class VisService {
 
   getImages(){
     return this.images$.asObservable();
+  }
+
+  selectImage(path: string){
+    console.log("VisService: Image selected");
+    this.selectedImage$.next(path);
+  }
+
+  imageSelected(){
+    return this.selectedImage$.asObservable();
   }
 }

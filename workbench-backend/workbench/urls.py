@@ -18,6 +18,8 @@ from django.contrib import admin
 
 from index import views as index_views
 from file_manager import views as file_manager_views
+from django.conf.urls.static import static
+from workbench import settings
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -34,3 +36,6 @@ urlpatterns = [
     url(r'^file_manager/delete_dataset/(?P<dataset_name>.+)$', file_manager_views.delete_dataset, name='deleteDataSet'),
     url(r'^file_manager/change_file_permissions/?$', file_manager_views.change_file_permissions, name='changeFilePermissions')
 ]
+
+if settings.DEBUG is True:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
