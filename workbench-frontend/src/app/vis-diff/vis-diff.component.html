@@ -1,0 +1,8 @@
+<div id="diff-container">
+  <img src="/media/{{leftImage}}" id="leftImage" class="stack-image">
+  <img src="/media/{{rightImage}}" id="rightImage" class="stack-image" [ngStyle]="{'clip': clipStyle}">
+  
+  <p class="range-field">
+    <input (input)="diffUpdate($event)" type="range" id="diff-slider" min="0" max="1000" />
+  </p>
+</div>

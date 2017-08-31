@@ -20,7 +20,8 @@ import { DataImportComponent } from './data-import/data-import.component';
 import { DatasetDeleteComponent } from './dataset-delete/dataset-delete.component';
 import { FilePermissionsModalComponent } from './file-permissions-modal/file-permissions-modal.component';
 import { VisSidebarComponent } from './vis-sidebar/vis-sidebar.component';
-import { VisService } from './vis.service'
+import { VisService } from './vis.service';
+import { VisDiffComponent } from './vis-diff/vis-diff.component'
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { VisService } from './vis.service'
     FileSelectDirective, 
     DatasetDeleteComponent,
     FilePermissionsModalComponent,
-    VisSidebarComponent
+    VisSidebarComponent,
+    VisDiffComponent
   ],
   imports: [
     BrowserModule,

@@ -10,8 +10,7 @@
             </div>
             <span id="test1"></span> <!--Empty spans so materialize can target something-->
             <span id="test2"></span>
-            <img *ngIf="imagesDisplayed[0]" src="/media/{{imagesDisplayed[0]}}" id="left-image"/>
-            <img *ngIf="imagesDisplayed[1]" src="/media/{{imagesDisplayed[1]}}" id="right-image"/>
         </div>
+        <vis-diff [leftImage]="imagesDisplayed[0]" [rightImage]="imagesDisplayed[1]"></vis-diff>
     </div>
 </div>

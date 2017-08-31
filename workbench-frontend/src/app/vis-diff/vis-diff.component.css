@@ -1,0 +1,17 @@
+
+#diff-container{
+    margin-top: 10px;
+    position: inherit;
+}
+
+#diff-container .stack-image{
+    display: block;
+    max-width: 60vw;
+    max-height: 50vh;
+    border: 1px solid red;
+}
+
+#rightImage{
+    position: absolute;
+    top: 88px;
+}
