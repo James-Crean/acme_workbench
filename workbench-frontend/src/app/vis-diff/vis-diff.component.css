@@ -1,4 +1,8 @@
 
+#diff-slider{
+    margin: 0, auto;
+}
+
 #diff-container{
     margin-top: 10px;
     position: inherit;
@@ -6,12 +10,26 @@
 
 #diff-container .stack-image{
     display: block;
-    max-width: 60vw;
-    max-height: 50vh;
+    max-width: 80vw;
+    max-height: 70vh;
     border: 1px solid red;
 }
 
+#leftImage {
+    margin: 0 auto;
+}
 #rightImage{
     position: absolute;
     top: 88px;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+}
+
+#slider-wrapper{
+    text-align: center;
+}
+
+#slider-wrapper > span{
+    display: none;
 }

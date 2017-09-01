@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'vis-diff',
@@ -7,10 +7,13 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class VisDiffComponent implements OnInit {
 
-  @Input() leftImage: string;
-  @Input() rightImage: string;
-  sliderVal = "0";
+  @Input() leftImagePath: string = "";
+  @Input() rightImagePath: string = "";
+  @ViewChild('rightImage') imageElement: any;
+  sliderPercent = 0;
   clipStyle = "";
+  imageWidth = "100%";
+  sliderMaxWidth = "unset"
   constructor() { }
 
   ngOnInit() {
@@ -18,14 +21,27 @@ export class VisDiffComponent implements OnInit {
 
   diffUpdate($event){
     let sliderVal = $event.target.value;
-    console.log()
     if(isNaN(sliderVal)){
-      this.sliderVal = "0";
+      this.sliderPercent = 0;
     }
     else{
-      this.sliderVal = sliderVal;
+      this.sliderPercent = Number.parseFloat(sliderVal)/10;
+      console.log(this.sliderPercent)
     }
-    this.clipStyle = "rect(0, 10000px, 10000px, ".concat(this.sliderVal, "px");
-    console.log(this.clipStyle);
+    let width = `${this.sliderPercent.toString()}%`;
+    this.clipStyle = `polygon(${width} 0, 100% 0, 100% 100%, ${width} 100%)`;
+    console.log(this.clipStyle)
+  }
+
+  rightImageLoad($event){
+    if(this.leftImagePath && this.rightImagePath){
+      this.clipStyle = "polygon(50% 0, 100% 0, 100% 100%, 50% 100%)";
+    }
+    this.sliderMaxWidth = this.imageElement.nativeElement.offsetWidth.toString();
+  }
+
+  windowResize($event){
+    console.log("Winodw resizing")
+    this.sliderMaxWidth = this.imageElement.nativeElement.offsetWidth.toString();
   }
 }

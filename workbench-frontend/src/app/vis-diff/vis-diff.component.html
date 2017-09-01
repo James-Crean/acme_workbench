@@ -1,8 +1,26 @@
-<div id="diff-container">
-  <img src="/media/{{leftImage}}" id="leftImage" class="stack-image">
-  <img src="/media/{{rightImage}}" id="rightImage" class="stack-image" [ngStyle]="{'clip': clipStyle}">
+<div (window:resize)="windowResize($event)" id="diff-container">
+  <img  *ngIf="leftImagePath"
+        src="/media/{{leftImagePath}}"
+        id="leftImage"
+        class="stack-image">
+
+  <img  #rightImage
+        *ngIf="rightImagePath" 
+        src="/media/{{rightImagePath}}" 
+        (load)="rightImageLoad($event)"
+        id="rightImage"
+        class="stack-image"
+        [ngStyle]="{'clip-path': clipStyle}">
   
-  <p class="range-field">
-    <input (input)="diffUpdate($event)" type="range" id="diff-slider" min="0" max="1000" />
+  <p id="slider-wrapper">
+    <input (input)="diffUpdate($event)" type="range" id="diff-slider" min="0" max="1000" [ngStyle]="{'width': imageWidth, 'max-width.px': sliderMaxWidth}"/>
+  </p>
+  <p>
+    <input class="with-gap" name="diff" type="radio" id="difference"/>
+    <label for="test5">Difference</label>
+    <input class="with-gap" name="fade" type="radio" id="fade"/>
+    <label for="test5">Fade</label>
+    <input class="with-gap" name="swipe" type="radio" id="swipe" checked />
+    <label for="test5">Swipe</label>
   </p>
 </div>
