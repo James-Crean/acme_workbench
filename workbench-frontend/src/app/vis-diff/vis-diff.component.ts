@@ -13,7 +13,9 @@ export class VisDiffComponent implements OnInit {
   sliderPercent = 0;
   clipStyle = "";
   imageWidth = "100%";
-  sliderMaxWidth = "unset"
+  sliderMaxWidth = "unset";
+  currentMode = "swipe";
+  availableModes = ["difference", "fade", "swipe"]
   constructor() { }
 
   ngOnInit() {
@@ -26,11 +28,9 @@ export class VisDiffComponent implements OnInit {
     }
     else{
       this.sliderPercent = Number.parseFloat(sliderVal)/10;
-      console.log(this.sliderPercent)
     }
     let width = `${this.sliderPercent.toString()}%`;
     this.clipStyle = `polygon(${width} 0, 100% 0, 100% 100%, ${width} 100%)`;
-    console.log(this.clipStyle)
   }
 
   rightImageLoad($event){
@@ -41,7 +41,13 @@ export class VisDiffComponent implements OnInit {
   }
 
   windowResize($event){
-    console.log("Winodw resizing")
     this.sliderMaxWidth = this.imageElement.nativeElement.offsetWidth.toString();
+  }
+
+  radioSelected(mode: string){
+    console.log("Mode selected:", mode);
+    if(this.availableModes.indexOf(mode) > -1){
+      this.currentMode = mode;
+    }
   }
 }

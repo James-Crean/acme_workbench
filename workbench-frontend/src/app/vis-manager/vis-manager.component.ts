@@ -12,11 +12,13 @@ export class VisManagerComponent implements OnInit {
   imagesDisplayed = ["",""]; //Holds the path of the images currently selected. for instance: my_dataset/c1.jpg
   activeTab = 0;
   imageDiff: any;
+  imageName = ["Select An Image", "Select An Image"];
   constructor(private visService: VisService) {
     this.visService.imageSelected()
       .subscribe(
         path => {
           this.imagesDisplayed[this.activeTab] = path;
+          this.imageName[this.activeTab] = path;
         },
         error => console.log(error));
   }
