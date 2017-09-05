@@ -12,6 +12,7 @@ export class VisDiffComponent implements OnInit {
   @ViewChild('rightImage') imageElement: any;
   sliderPercent = 0;
   clipStyle = "";
+  opacity = 1;
   imageWidth = "100%";
   sliderMaxWidth = "unset";
   currentMode = "swipe";
@@ -21,7 +22,7 @@ export class VisDiffComponent implements OnInit {
   ngOnInit() {
   }
 
-  diffUpdate($event){
+  sliderChange($event){
     let sliderVal = $event.target.value;
     if(isNaN(sliderVal)){
       this.sliderPercent = 0;
@@ -29,8 +30,7 @@ export class VisDiffComponent implements OnInit {
     else{
       this.sliderPercent = Number.parseFloat(sliderVal)/10;
     }
-    let width = `${this.sliderPercent.toString()}%`;
-    this.clipStyle = `polygon(${width} 0, 100% 0, 100% 100%, ${width} 100%)`;
+    this.diffUpdate()
   }
 
   rightImageLoad($event){
@@ -48,6 +48,20 @@ export class VisDiffComponent implements OnInit {
     console.log("Mode selected:", mode);
     if(this.availableModes.indexOf(mode) > -1){
       this.currentMode = mode;
+    }
+    this.diffUpdate();
+  }
+
+  diffUpdate(){
+    this.clipStyle = "";
+    this.opacity = 1;
+
+    if(this.currentMode == "swipe"){
+      let width = `${this.sliderPercent.toString()}%`;
+      this.clipStyle = `polygon(${width} 0, 100% 0, 100% 100%, ${width} 100%)`;
+    }
+    else if(this.currentMode == "fade"){  
+      this.opacity = this.sliderPercent/100;
     }
   }
 }

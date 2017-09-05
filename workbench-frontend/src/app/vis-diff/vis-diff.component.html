@@ -10,18 +10,19 @@
         (load)="rightImageLoad($event)"
         id="rightImage"
         class="stack-image"
-        [ngStyle]="{'clip-path': clipStyle}">
+        [ngStyle]="{'clip-path': clipStyle,
+                    'opacity': opacity}">
   
   <div id="controls-wrapper">
     <p id="slider-wrapper">
-      <input (input)="diffUpdate($event)" type="range" id="diff-slider" min="0" max="1000" [ngStyle]="{'width': imageWidth, 'max-width.px': sliderMaxWidth}"/>
+      <input (input)="sliderChange($event)" type="range" id="diff-slider" min="0" max="1000" [ngStyle]="{'width': imageWidth, 'max-width.px': sliderMaxWidth}"/>
     </p>
     <form materialize id="radio-wrapper">
       <input (click)="radioSelected('difference')" name="diffMode" type="radio" id="difference" />
       <label for="difference">Difference</label>
       <input (click)="radioSelected('fade')" name="diffMode" type="radio" id="fade" />
       <label for="fade">Fade</label>
-      <input (click)="radioSelected('swipe')" name="diffMode" type="radio" id="swipe" />
+      <input (click)="radioSelected('swipe')" name="diffMode" type="radio" id="swipe" checked/>
       <label for="swipe">Swipe</label>
     </form>
   </div>
