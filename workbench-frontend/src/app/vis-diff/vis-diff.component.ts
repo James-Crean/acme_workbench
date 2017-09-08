@@ -16,7 +16,8 @@ export class VisDiffComponent implements OnInit {
   imageWidth = "100%";
   sliderMaxWidth = "unset";
   currentMode = "swipe";
-  availableModes = ["difference", "fade", "swipe"]
+  availableModes = ["difference", "fade", "swipe", "side-by-side"]
+  imageClass = "stack-image" //Either: "stack-image", or "side-by-side" 
   constructor() { }
 
   ngOnInit() {
@@ -45,9 +46,14 @@ export class VisDiffComponent implements OnInit {
   }
 
   radioSelected(mode: string){
-    console.log("Mode selected:", mode);
     if(this.availableModes.indexOf(mode) > -1){
       this.currentMode = mode;
+      if(this.currentMode == 'side-by-side'){
+        this.imageClass = "side-by-side"
+      }
+      else{
+        this.imageClass = "stack-image";
+      }
     }
     this.diffUpdate();
   }
@@ -62,6 +68,9 @@ export class VisDiffComponent implements OnInit {
     }
     else if(this.currentMode == "fade"){  
       this.opacity = this.sliderPercent/100;
+    }
+    else if(this.currentMode == "side-by-side"){
+      console.log("impliment me");
     }
   }
 }

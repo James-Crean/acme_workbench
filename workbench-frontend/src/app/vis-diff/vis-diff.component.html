@@ -2,14 +2,14 @@
   <img  *ngIf="leftImagePath"
         src="/media/{{leftImagePath}}"
         id="leftImage"
-        class="stack-image">
+        [ngClass]="imageClass">
 
   <img  #rightImage
         *ngIf="rightImagePath" 
         src="/media/{{rightImagePath}}" 
         (load)="rightImageLoad($event)"
         id="rightImage"
-        class="stack-image"
+        [ngClass]="imageClass"
         [ngStyle]="{'clip-path': clipStyle,
                     'opacity': opacity}">
   
@@ -24,6 +24,8 @@
       <label for="fade">Fade</label>
       <input (click)="radioSelected('swipe')" name="diffMode" type="radio" id="swipe" checked/>
       <label for="swipe">Swipe</label>
+      <input (click)="radioSelected('side-by-side')" name="diffMode" type="radio" id="side-by-side"/>
+      <label for="side-by-side">Side-By-Side</label>
     </form>
   </div>
 </div>

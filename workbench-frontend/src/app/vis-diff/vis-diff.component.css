@@ -6,6 +6,8 @@
 #diff-container{
     margin-top: 10px;
     position: inherit;
+    display: inline;
+    text-align: center;
 }
 
 #diff-container .stack-image{
@@ -16,6 +18,12 @@
     left: 0;
     right: 0;
     margin: 0 auto;
+}
+
+#diff-container .side-by-side{
+    height: auto;
+    max-height: 70vh;
+    max-width: 49%;
 }
 
 #leftImage {
