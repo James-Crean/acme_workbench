@@ -15,7 +15,7 @@
   
   <div id="controls-wrapper">
     <p id="slider-wrapper">
-      <input (input)="sliderChange($event)" type="range" id="diff-slider" min="0" max="1000" [ngStyle]="{'width': imageWidth, 'max-width.px': sliderMaxWidth}"/>
+      <input *ngIf="currentMode != 'side-by-side'" (input)="sliderChange($event)" type="range" id="diff-slider" min="0" max="1000" [ngStyle]="{'width': imageWidth, 'max-width.px': sliderMaxWidth}"/>
     </p>
     <form materialize id="radio-wrapper">
       <input (click)="radioSelected('difference')" name="diffMode" type="radio" id="difference" />

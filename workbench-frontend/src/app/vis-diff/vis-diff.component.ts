@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnChanges, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'vis-diff',
@@ -10,11 +10,11 @@ export class VisDiffComponent implements OnInit {
   @Input() leftImagePath: string = "";
   @Input() rightImagePath: string = "";
   @ViewChild('rightImage') imageElement: any;
-  sliderPercent = 0;
+  sliderPercent = 50;
   clipStyle = "";
   opacity = 1;
   imageWidth = "100%";
-  sliderMaxWidth = "unset";
+  sliderMaxWidth = "";
   currentMode = "swipe";
   availableModes = ["difference", "fade", "swipe", "side-by-side"]
   imageClass = "stack-image" //Either: "stack-image", or "side-by-side" 
@@ -35,10 +35,9 @@ export class VisDiffComponent implements OnInit {
   }
 
   rightImageLoad($event){
-    if(this.leftImagePath && this.rightImagePath){
-      this.clipStyle = "polygon(50% 0, 100% 0, 100% 100%, 50% 100%)";
+    if(this.leftImagePath && this.rightImagePath ){
+      this.diffUpdate();
     }
-    this.sliderMaxWidth = this.imageElement.nativeElement.offsetWidth.toString();
   }
 
   windowResize($event){
@@ -53,6 +52,9 @@ export class VisDiffComponent implements OnInit {
       }
       else{
         this.imageClass = "stack-image";
+        setTimeout(() => { //Allow Angular to update the image size before we attempt to get it. 
+         this.sliderMaxWidth = this.imageElement.nativeElement.offsetWidth.toString();
+        }, 0)
       }
     }
     this.diffUpdate();
@@ -70,7 +72,7 @@ export class VisDiffComponent implements OnInit {
       this.opacity = this.sliderPercent/100;
     }
     else if(this.currentMode == "side-by-side"){
-      console.log("impliment me");
+      
     }
   }
 }
